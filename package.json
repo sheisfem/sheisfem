@@ -1,0 +1,39 @@
+{
+  "name": "sheisfem",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "type-check": "astro check",
+    "lint": "biome lint . --write",
+    "lint:check": "biome lint .",
+    "lint:fix": "biome check . --write",
+    "fix:check": "biome check .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "staged": "biome check --write --staged"
+  },
+  "dependencies": {
+    "@astrojs/react": "^5.0.6",
+    "@keystatic/astro": "^5.1.0",
+    "@keystatic/core": "^0.5.50",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^6.4.2",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@biomejs/biome": "^2.4.16",
+    "typescript": "^6.0.3"
+  }
+}
