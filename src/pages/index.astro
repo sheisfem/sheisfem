@@ -1,17 +1,247 @@
 ---
+import FolioBar from "../components/FolioBar.astro";
+import PillarIcon from "../components/PillarIcon.astro";
+import ResourceRow from "../components/ResourceRow.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { formatIsoIssueWeek } from "../lib/issueWeek";
 
+const pillars = [
+  {
+    num: "01",
+    key: "earns",
+    name: "She Earns More",
+    desc: "Income, side hustles, negotiating, monetizing the skills you already have.",
+  },
+  {
+    num: "02",
+    key: "builds",
+    name: "She Builds More",
+    desc: "Businesses, brands, assets & systems that keep working when you step away.",
+  },
+  {
+    num: "03",
+    key: "invests",
+    name: "She Invests More",
+    desc: "Investing, compounding, and long-term wealth — explained without jargon or shame.",
+  },
+  {
+    num: "04",
+    key: "lives",
+    name: "She Lives More",
+    desc: "Intentional living, freedom, joy & the wellbeing that makes the rest sustainable.",
+  },
+  {
+    num: "05",
+    key: "learns",
+    name: "She Learns More",
+    desc: "Books, courses, and the money education most of us never got.",
+  },
+] as const;
+
+const currentIssueWeekLabel = formatIsoIssueWeek();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="SheisFEM — Diary of women who earn more" active="home">
+  <header class="cover wrap" data-screen-label="Home — Cover">
+    <FolioBar
+      left={currentIssueWeekLabel}
+      middle="Diary of women who earn more"
+      right="sheisfem.com"
+      dynamicIssueWeek
+    />
+    <div class="cover-inner">
+      <div class="cover-lede-col">
+        <div class="cover-eyebrow">
+          <span class="kicker accent">The Diary</span>
+          <span class="yr">est. 2019</span>
+        </div>
+        <h1>Earn more.<br />Build more.<br /><span class="em">Live more.</span></h1>
+        <p class="tagline">on your own terms.</p>
+        <p class="lede">
+          Tools, resources, and real talk for Canadian women ready to take control of their
+          financial lives — no shame, no jargon, just what actually works.
+        </p>
+        <div class="actions">
+          <a
+            class="btn btn-primary"
+            href="https://ca.pinterest.com/sheisfem/"
+            target="_blank"
+            rel="noopener"
+          >
+            Follow on Pinterest
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </a>
+          <a class="btn btn-ghost" href="/resources">Browse resources</a>
+        </div>
+      </div>
+      <div class="cover-side">
+        <div class="cover-block">
+          <span class="cb-tag"><PillarIcon pillar="earns" />She Earns More</span>
+          <div class="cb-quote">Money is <em>permission</em> to live on your own terms.</div>
+          <div class="cb-foot"><span class="cb-dot">F</span>sheisfem.com</div>
+        </div>
+        <div class="cover-lines">
+          <div class="cl"><span class="n">01</span><span>The TFSA most women underuse</span></div>
+          <div class="cl"><span class="n">02</span><span>Start with what you have</span></div>
+          <div class="cl"><span class="n">03</span><span>The tools we actually use</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section wrap" data-screen-label="Home — Contents">
+    <div class="contents-head">
+      <div>
+        <span class="kicker">Contents · The Five Pillars</span>
+        <h2 class="sec-title">Five ways<br />she grows</h2>
+      </div>
+      <p class="sec-sub">
+        Every story belongs to one pillar — five threads that run through everything we share,
+        from side-hustle income to the books that quietly reshape how you see money.
+      </p>
+    </div>
+
+    <div class="toc">
+      {
+        pillars.map((pillar) => (
+          <a class="toc-row" href={`/resources#${pillar.key}`}>
+            <span class="tnum">{pillar.num}</span>
+            <span class="tbody">
+              <span class="tname">
+                <PillarIcon pillar={pillar.key} />
+                {pillar.name}
+              </span>
+              <span class="tdesc">{pillar.desc}</span>
+              <span class="tgo">
+                Explore <span class="arr">→</span>
+              </span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section bg-cream" data-screen-label="Home — Field notes">
+    <div class="wrap">
+      <div class="spread">
+        <div class="sp-left">
+          <span class="kicker">From the diary</span>
+          <h2 class="sec-title" style="margin-bottom:.1em;">
+            Small habits.<br />Compounding<br /><em>freedom.</em>
+          </h2>
+          <p class="lead">
+            The pins worth saving aren't the loudest ones — they're the quiet, specific ones you
+            actually act on. Start with these three.
+          </p>
+          <a class="btn btn-peach" href="/resources" style="margin-top:30px;">See the tools</a>
+        </div>
+        <div class="sp-right">
+          <div class="sp-note"><PillarIcon pillar="invests" />She Invests More · Field notes</div>
+          <div class="tiprow">
+            <span class="tn">1</span>
+            <div>
+              <div class="tt">Open your TFSA first</div>
+              <div class="td">It's the most powerful account most Canadian women underuse.</div>
+            </div>
+          </div>
+          <div class="tiprow">
+            <span class="tn">2</span>
+            <div>
+              <div class="tt">Start with what you have</div>
+              <div class="td">
+                You don't need a lot. You need to start. The habit matters more than the amount.
+              </div>
+            </div>
+          </div>
+          <div class="tiprow">
+            <span class="tn">3</span>
+            <div>
+              <div class="tt">Let it compound</div>
+              <div class="td">
+                Time in the market beats timing the market. Invest boring, and give it years.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" data-screen-label="Home — Shortlist">
+    <div class="sec-head">
+      <div>
+        <span class="kicker">Tools we actually use</span>
+        <h2 class="sec-title">The shortlist</h2>
+      </div>
+      <a class="btn btn-ghost" href="/resources">All resources →</a>
+    </div>
+    <div class="r-list" style="margin-top:38px;">
+      <ResourceRow
+        href="/resources#invests"
+        icon="W"
+        name="Wealthsimple"
+        description="Canada's simplest investing app. Start with as little as $1."
+      />
+      <ResourceRow
+        href="/resources#earns"
+        icon="N"
+        name="Neo Financial"
+        description="A modern Canadian card with real cash-back rewards."
+      />
+      <ResourceRow
+        href="/resources#builds"
+        icon="C"
+        name="Canva"
+        description="Design your brand without a designer."
+      />
+    </div>
+  </section>
+
+  <section class="section peach" data-screen-label="Home — Newsletter CTA">
+    <div class="wrap">
+      <FolioBar left="Join the diary" middle="The newsletter" right="Straight to your inbox" />
+      <div class="cta-grid" style="margin-top:52px;">
+        <div>
+          <div class="cta-text">She decided to start.<br /><em>That was the<br />hardest part.</em></div>
+          <p class="cta-sub">
+            Tools, tips, and real talk on building wealth your way — delivered to your inbox. No
+            spam, no jargon, no permission required.
+          </p>
+          <span class="cta-script">— from the sheisfem diary</span>
+        </div>
+        <div class="news-panel">
+          <form class="news-form" data-newsletter-form>
+            <label class="news-label" for="news-email">Get the diary in your inbox</label>
+            <p class="news-desc">
+              A short note most weeks — the tools, habits, and ideas worth saving.
+            </p>
+            <div class="news-row">
+              <input id="news-email" type="email" required placeholder="your@email.com" aria-label="Email address" />
+              <button type="submit" class="btn btn-primary">
+                Subscribe
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6"></path>
+                </svg>
+              </button>
+            </div>
+            <span class="news-fine">No spam. Unsubscribe anytime.</span>
+            <p class="news-ok">You're in. Watch your inbox.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const form = document.querySelector("[data-newsletter-form]");
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      form.querySelector(".news-row")?.setAttribute("style", "display:none");
+      form.querySelector(".news-fine")?.setAttribute("style", "display:none");
+      form.querySelector(".news-ok")?.setAttribute("style", "display:block");
+    });
+  </script>
+</BaseLayout>

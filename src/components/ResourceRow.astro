@@ -1,0 +1,21 @@
+---
+interface Props {
+  href: string;
+  icon: string;
+  name: string;
+  description: string;
+  cta?: string;
+  external?: boolean;
+}
+
+const { href, icon, name, description, cta = "Try it", external = false } = Astro.props;
+---
+
+<a class="r-row" href={href} target={external ? "_blank" : undefined} rel={external ? "noopener" : undefined}>
+  <div class="ricon">{icon}</div>
+  <div>
+    <div class="rname">{name}</div>
+    <div class="rdesc">{description}</div>
+  </div>
+  <div class="rcta">{cta} <span class="arr">→</span></div>
+</a>

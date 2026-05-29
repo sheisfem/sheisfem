@@ -1,0 +1,26 @@
+---
+interface Props {
+  left: string;
+  middle: string;
+  right: string;
+  dynamicIssueWeek?: boolean;
+  dynamicIssueWeekPosition?: "left" | "middle" | "right";
+}
+
+const {
+  left,
+  middle,
+  right,
+  dynamicIssueWeek = false,
+  dynamicIssueWeekPosition = "left",
+} = Astro.props;
+
+const issueWeekAttr = (position: Props["dynamicIssueWeekPosition"]) =>
+  dynamicIssueWeek && dynamicIssueWeekPosition === position ? "true" : undefined;
+---
+
+<div class="folio-bar">
+  <span data-current-issue-week={issueWeekAttr("left")}>{left}</span>
+  <span class="mid" data-current-issue-week={issueWeekAttr("middle")}>{middle}</span>
+  <span data-current-issue-week={issueWeekAttr("right")}>{right}</span>
+</div>

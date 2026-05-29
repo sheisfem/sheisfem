@@ -1,0 +1,52 @@
+---
+import { getCurrentYear } from "../lib/issueWeek";
+
+const currentYear = getCurrentYear();
+---
+
+<footer class="colophon">
+  <div class="wrap">
+    <div class="c-rule">
+      <span>Earn, Build, and Live More</span>
+      <span>sheisfem.com</span>
+    </div>
+    <div class="c-top">
+      <div>
+        <div class="c-logo">
+          <img src="/assets/fem-logo.png" alt="FEM" />
+          <div>
+            <div class="c-name">SheisFEM</div>
+            <div class="c-site">sheisfem.com</div>
+          </div>
+        </div>
+        <p class="c-tag">female earning more.</p>
+      </div>
+      <div class="c-nav">
+        <div class="c-col">
+          <h5>Explore</h5>
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/resources">Resources</a>
+        </div>
+        <div class="c-col">
+          <h5>Pillars</h5>
+          <a href="/resources#earns">She Earns More</a>
+          <a href="/resources#builds">She Builds More</a>
+          <a href="/resources#invests">She Invests More</a>
+          <a href="/resources#lives">She Lives More</a>
+          <a href="/resources#learns">She Learns More</a>
+        </div>
+        <div class="c-col">
+          <h5>Follow</h5>
+          <a href="https://ca.pinterest.com/sheisfem/" target="_blank" rel="noopener">Pinterest</a>
+          <a href="https://www.instagram.com/sheisfem/" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:hello@sheisfem.com">hello@sheisfem.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="c-bottom">
+      <span>© {currentYear} SheisFEM · Female Earning More</span>
+      <span><a href="/about#disclosure">Affiliate disclosure</a> · sheisfem.com</span>
+    </div>
+  </div>
+</footer>

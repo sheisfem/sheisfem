@@ -1,0 +1,180 @@
+---
+import Disclosure from "../components/Disclosure.astro";
+import FolioBar from "../components/FolioBar.astro";
+import PillarIcon from "../components/PillarIcon.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { formatIsoIssueWeek } from "../lib/issueWeek";
+
+const audience = [
+  {
+    num: "01",
+    title: "She's negotiating her next raise — or her first one.",
+    text: "She knows she's worth more. She's just looking for the words, the data, and the confidence to ask for it.",
+  },
+  {
+    num: "02",
+    title: "She just opened her first investing account.",
+    text: "She's done leaving money in savings she can't spell. She wants to invest — and she wants to understand what she's doing.",
+  },
+  {
+    num: "03",
+    title: "She's building something on the side.",
+    text: "A business, a brand, a second income. She's figuring out the tools and systems that let her build without burning out.",
+  },
+  {
+    num: "04",
+    title: "She's done feeling behind.",
+    text: "She doesn't need to be shamed into action or sold a quick fix. She needs real information, good tools, and someone in her corner.",
+  },
+];
+
+const pillars = [
+  {
+    num: "01",
+    key: "earns",
+    name: "She Earns More",
+    lead: "Income is the engine.",
+    text: "Side hustles, salary negotiation, freelance rates, and turning the skills you already have into money. We start here because everything else gets easier once more is coming in.",
+  },
+  {
+    num: "02",
+    key: "builds",
+    name: "She Builds More",
+    lead: "Assets over hours.",
+    text: "Businesses, brands, and the systems that keep working when you step away. We cover the tools and structures that turn effort into something that lasts.",
+  },
+  {
+    num: "03",
+    key: "invests",
+    name: "She Invests More",
+    lead: "Boring, early, and consistent.",
+    text: "Investing for beginners, compounding, and long-term wealth — explained without jargon or shame. The goal isn't to get rich quick; it's to never have to start over.",
+  },
+  {
+    num: "04",
+    key: "lives",
+    name: "She Lives More",
+    lead: "The whole point.",
+    text: "Intentional living, freedom, rest, and joy. Financial independence isn't a spreadsheet — it's the room it creates to live deliberately. We keep that front of mind.",
+  },
+  {
+    num: "05",
+    key: "learns",
+    name: "She Learns More",
+    lead: "Mindset is the multiplier.",
+    text: "Books, courses, and the money education most of us never got. The ideas that quietly change how you see your own potential — and what you decide to do next.",
+  },
+] as const;
+
+const currentIssueWeekLabel = formatIsoIssueWeek();
+---
+
+<BaseLayout title="About — SheisFEM" active="about">
+  <header class="about-cover wrap" data-screen-label="About — Cover">
+    <FolioBar
+      left="Our Story"
+      middle="The memoir"
+      right={currentIssueWeekLabel}
+      dynamicIssueWeek
+      dynamicIssueWeekPosition="right"
+    />
+    <div class="ac-inner">
+      <h1>For women who are done <em>waiting.</em></h1>
+      <p class="tagline">— and ready to write their own story.</p>
+    </div>
+  </header>
+
+  <section class="section bg-cream" data-screen-label="About — Story">
+    <div class="wrap">
+      <div class="story">
+        <div class="pq">
+          <div class="mark">"</div>
+          <div class="q">
+            Money was never the goal. It's permission — to choose, to leave, to build, to live on
+            your own terms.
+          </div>
+          <div class="a">— from the SheisFEM diary</div>
+        </div>
+        <div class="story-body">
+          <p>
+            <strong>SheisFEM — Female Earning More —</strong> started as a running list. A diary
+            of the tools, decisions, and small habits that actually move a woman closer to
+            financial independence. It turned into something worth sharing.
+          </p>
+          <p>
+            We're a content-first brand for <span class="hl">Canadian women</span> at any stage of
+            their financial journey — whether you're negotiating your first raise, opening your
+            first investing account, or quietly building something of your own on the side.
+          </p>
+          <p>
+            This isn't a bank, and it doesn't read like one. It's warmer than that — curated tools,
+            habits that compound, and the mindset shifts that make the rest possible. Real
+            resources, honestly recommended.
+          </p>
+          <p>
+            Because earning more was never about the money itself. It's about the life it lets you
+            build.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" data-screen-label="About — Who it's for">
+    <div class="sec-head">
+      <div>
+        <span class="kicker">Who this is for</span>
+        <h2 class="sec-title">She looks a lot<br />like <em>you.</em></h2>
+      </div>
+      <p class="sec-sub">
+        SheisFEM is for Canadian women at every stage — what matters isn't where you're starting
+        from, it's that you've decided to move.
+      </p>
+    </div>
+
+    <div class="for-grid">
+      {
+        audience.map((item) => (
+          <div class="for-row">
+            <div class="fnum">{item.num}</div>
+            <div>
+              <h4>{item.title}</h4>
+              <p>{item.text}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section bg-cream" data-screen-label="About — Pillars">
+    <div class="wrap">
+      <span class="kicker">What we cover</span>
+      <h2 class="sec-title" style="margin-bottom:42px;">Five ways she grows</h2>
+
+      {
+        pillars.map((pillar) => (
+          <div class="pillar-row">
+            <span class="pr-num">{pillar.num}</span>
+            <span class="pr-name">
+              <PillarIcon pillar={pillar.key} />
+              {pillar.name}
+            </span>
+            <p class="pr-desc">
+              <strong>{pillar.lead}</strong> {pillar.text}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section tight wrap" id="disclosure" data-screen-label="About — Disclosure">
+    <span class="kicker">Transparency</span>
+    <h2 class="sec-title" style="margin-bottom:30px;">Affiliate disclosure</h2>
+    <Disclosure
+      title="How we keep this honest"
+      text="Some links on this site are affiliate links. If you click through and make a purchase, SheisFEM may earn a small commission at no extra cost to you. We only recommend tools we believe in — and we'd share them whether or not there was a commission attached."
+    />
+  </section>
+</BaseLayout>

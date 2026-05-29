@@ -1,0 +1,71 @@
+---
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import Masthead from "../components/Masthead.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  active?: "home" | "about" | "resources";
+}
+
+const {
+  title,
+  description = "Tools, resources, and real talk for Canadian women ready to take control of their financial lives.",
+  active = "home",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/png" href="/assets/fem-logo.png" />
+    <link rel="apple-touch-icon" href="/assets/fem-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&family=Caveat:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Masthead active={active} />
+    <slot />
+    <Footer />
+    <script is:inline>
+      (() => {
+        const getIsoIssueWeek = (date) => {
+          const target = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+          const day = target.getUTCDay() || 7;
+          target.setUTCDate(target.getUTCDate() + 4 - day);
+          const yearStart = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
+          return {
+            week: Math.ceil(((target - yearStart) / 86400000 + 1) / 7),
+            year: target.getUTCFullYear(),
+          };
+        };
+
+        document.querySelectorAll("[data-current-issue-week]").forEach((element) => {
+          const issueWeek = getIsoIssueWeek(new Date());
+          element.textContent = `Issue No.${String(issueWeek.week).padStart(2, "0")} · ${issueWeek.year}`;
+        });
+
+        const burger = document.getElementById("navBurger");
+        const links = document.getElementById("navLinks");
+        burger?.addEventListener("click", () => {
+          links?.classList.toggle("open");
+        });
+        links?.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            links.classList.remove("open");
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

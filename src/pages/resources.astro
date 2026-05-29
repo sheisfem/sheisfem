@@ -1,0 +1,237 @@
+---
+import Disclosure from "../components/Disclosure.astro";
+import FolioBar from "../components/FolioBar.astro";
+import PillarIcon from "../components/PillarIcon.astro";
+import ResourceRow from "../components/ResourceRow.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pillars = [
+  {
+    num: "01",
+    key: "earns",
+    chip: "She Earns More",
+    title: "Income & cash flow",
+    count: "Two tools",
+    resources: [
+      {
+        icon: "N",
+        name: "Neo Financial",
+        description:
+          "A modern Canadian credit card with real cash-back rewards — and no annual fee.",
+        cta: "Try it",
+      },
+      {
+        icon: "A",
+        name: "Amazon",
+        description:
+          "From planners and finance books to home office gear — everything that supports how you work.",
+        cta: "Shop",
+      },
+    ],
+  },
+  {
+    num: "02",
+    key: "builds",
+    chip: "She Builds More",
+    title: "Brands, assets & systems",
+    count: "Three tools",
+    resources: [
+      {
+        icon: "C",
+        name: "Canva",
+        description:
+          "Design your brand without a designer. Pins, logos, social graphics — all in one place.",
+        cta: "Try it",
+      },
+      {
+        icon: "A",
+        name: "Amazon",
+        description:
+          "Home office, tech, and the tools that make building from home a lot more comfortable.",
+        cta: "Shop",
+      },
+      {
+        icon: "N",
+        name: "Notion",
+        description:
+          "Plan income goals, track every win, and run your whole business from one workspace.",
+        cta: "Try it",
+      },
+    ],
+  },
+  {
+    num: "03",
+    key: "invests",
+    chip: "She Invests More",
+    title: "Long-term wealth",
+    count: "Two tools",
+    resources: [
+      {
+        icon: "W",
+        name: "Wealthsimple",
+        description: "Canada's simplest investing app. Start a TFSA or RRSP with as little as $1.",
+        cta: "Try it",
+      },
+      {
+        icon: "A",
+        name: "Amazon",
+        description:
+          "The investing books worth owning — from beginner guides to the ones that shift how you think about wealth.",
+        cta: "Shop",
+      },
+    ],
+  },
+  {
+    num: "04",
+    key: "lives",
+    chip: "She Lives More",
+    title: "Intentional living",
+    count: "Two tools",
+    resources: [
+      {
+        icon: "A",
+        name: "Amazon",
+        description:
+          "Wellness, home, and lifestyle finds that make your day-to-day feel more intentional.",
+        cta: "Shop",
+      },
+      {
+        icon: "C",
+        name: "Canva",
+        description:
+          "Design vision boards, trackers, and goal planners that make your intentions visible.",
+        cta: "Try it",
+      },
+    ],
+  },
+  {
+    num: "05",
+    key: "learns",
+    chip: "She Learns More",
+    title: "Mindset & money education",
+    count: "Two tools",
+    resources: [
+      {
+        icon: "A",
+        name: "Amazon — Money Books",
+        description:
+          "The reads that quietly change how you think about money, time, and what you're actually building toward.",
+        cta: "Shop",
+      },
+      {
+        icon: "C",
+        name: "Canva",
+        description:
+          "Turn what you're learning into something shareable. Templates for note-taking, study planning, and visual summaries.",
+        cta: "Try it",
+      },
+    ],
+  },
+] as const;
+---
+
+<BaseLayout title="Resources — SheisFEM" active="resources">
+  <header class="res-cover wrap" data-screen-label="Resources — Cover">
+    <FolioBar left="Tools & Resources" middle="The directory" right="Curated for Canada" />
+    <div class="rc-inner">
+      <h1>Tools we <em>actually</em> use.</h1>
+      <p class="sub">
+        Curated for Canadian women. Organized by what you're working on — earning, building,
+        investing, living, learning.
+      </p>
+    </div>
+  </header>
+
+  <div class="tabs-bar">
+    <div class="wrap">
+      <div class="tabs" id="tabs">
+        <button class="tab active" type="button" data-filter="all">All</button>
+        <button class="tab" type="button" data-filter="earns">Earns</button>
+        <button class="tab" type="button" data-filter="builds">Builds</button>
+        <button class="tab" type="button" data-filter="invests">Invests</button>
+        <button class="tab" type="button" data-filter="lives">Lives</button>
+        <button class="tab" type="button" data-filter="learns">Learns</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap" id="directory">
+    {
+      pillars.map((pillar) => (
+        <section class="pillar-block" data-pillar={pillar.key} id={pillar.key}>
+          <div class="pb-head">
+            <span class="pb-num">{pillar.num}</span>
+            <div class="pb-titles">
+              <span class="chip">
+                <PillarIcon pillar={pillar.key} />
+                {pillar.chip}
+              </span>
+              <h2>{pillar.title}</h2>
+              <div class="pb-count">{pillar.count}</div>
+            </div>
+          </div>
+          <div class="r-list">
+            {pillar.resources.map((resource) => (
+              <ResourceRow
+                href="#"
+                icon={resource.icon}
+                name={resource.name}
+                description={resource.description}
+                cta={resource.cta}
+                external
+              />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+
+    <div class="empty" id="empty">
+      <span class="serif">Nothing here yet.</span>
+      <p>More tools are on their way for this pillar.</p>
+    </div>
+  </main>
+
+  <section class="section tight bg-cream" id="disclosure" data-screen-label="Resources — Disclosure">
+    <div class="wrap">
+      <Disclosure text="Some links on this page are affiliate links. If you click through and make a purchase, SheisFEM may earn a small commission at no extra cost to you. We only recommend tools we believe in." />
+    </div>
+  </section>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>(".tab"));
+    const blocks = Array.from(document.querySelectorAll<HTMLElement>(".pillar-block"));
+    const empty = document.getElementById("empty");
+    const valid = ["earns", "builds", "invests", "lives", "learns"];
+
+    const applyFilter = (filter: string) => {
+      let anyVisible = false;
+      blocks.forEach((block) => {
+        const show = filter === "all" || block.dataset.pillar === filter;
+        block.style.display = show ? "" : "none";
+        if (show) {
+          anyVisible = true;
+        }
+      });
+      empty?.classList.toggle("show", !anyVisible);
+      tabs.forEach((tab) => {
+        tab.classList.toggle("active", tab.dataset.filter === filter);
+      });
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const filter = tab.dataset.filter ?? "all";
+        applyFilter(filter);
+        if (history.replaceState) {
+          history.replaceState(null, "", filter === "all" ? location.pathname : `#${filter}`);
+        }
+      });
+    });
+
+    const hash = (location.hash || "").replace("#", "");
+    if (valid.includes(hash)) {
+      applyFilter(hash);
+    }
+  </script>
+</BaseLayout>
