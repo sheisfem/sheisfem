@@ -1,133 +1,19 @@
 ---
+import { getCollection } from "astro:content";
 import Disclosure from "../components/Disclosure.astro";
 import FolioBar from "../components/FolioBar.astro";
 import PillarIcon from "../components/PillarIcon.astro";
 import ResourceRow from "../components/ResourceRow.astro";
+import { getPillarResources, getResourceCta, getResourceIcon, pillars } from "../data/resources";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const pillars = [
-  {
-    num: "01",
-    key: "earns",
-    chip: "She Earns More",
-    title: "Income & cash flow",
-    count: "Two tools",
-    resources: [
-      {
-        icon: "N",
-        name: "Neo Financial",
-        description:
-          "A modern Canadian credit card with real cash-back rewards — and no annual fee.",
-        cta: "Try it",
-      },
-      {
-        icon: "A",
-        name: "Amazon",
-        description:
-          "From planners and finance books to home office gear — everything that supports how you work.",
-        cta: "Shop",
-      },
-    ],
-  },
-  {
-    num: "02",
-    key: "builds",
-    chip: "She Builds More",
-    title: "Brands, assets & systems",
-    count: "Three tools",
-    resources: [
-      {
-        icon: "C",
-        name: "Canva",
-        description:
-          "Design your brand without a designer. Pins, logos, social graphics — all in one place.",
-        cta: "Try it",
-      },
-      {
-        icon: "A",
-        name: "Amazon",
-        description:
-          "Home office, tech, and the tools that make building from home a lot more comfortable.",
-        cta: "Shop",
-      },
-      {
-        icon: "N",
-        name: "Notion",
-        description:
-          "Plan income goals, track every win, and run your whole business from one workspace.",
-        cta: "Try it",
-      },
-    ],
-  },
-  {
-    num: "03",
-    key: "invests",
-    chip: "She Invests More",
-    title: "Long-term wealth",
-    count: "Two tools",
-    resources: [
-      {
-        icon: "W",
-        name: "Wealthsimple",
-        description: "Canada's simplest investing app. Start a TFSA or RRSP with as little as $1.",
-        cta: "Try it",
-      },
-      {
-        icon: "A",
-        name: "Amazon",
-        description:
-          "The investing books worth owning — from beginner guides to the ones that shift how you think about wealth.",
-        cta: "Shop",
-      },
-    ],
-  },
-  {
-    num: "04",
-    key: "lives",
-    chip: "She Lives More",
-    title: "Intentional living",
-    count: "Two tools",
-    resources: [
-      {
-        icon: "A",
-        name: "Amazon",
-        description:
-          "Wellness, home, and lifestyle finds that make your day-to-day feel more intentional.",
-        cta: "Shop",
-      },
-      {
-        icon: "C",
-        name: "Canva",
-        description:
-          "Design vision boards, trackers, and goal planners that make your intentions visible.",
-        cta: "Try it",
-      },
-    ],
-  },
-  {
-    num: "05",
-    key: "learns",
-    chip: "She Learns More",
-    title: "Mindset & money education",
-    count: "Two tools",
-    resources: [
-      {
-        icon: "A",
-        name: "Amazon — Money Books",
-        description:
-          "The reads that quietly change how you think about money, time, and what you're actually building toward.",
-        cta: "Shop",
-      },
-      {
-        icon: "C",
-        name: "Canva",
-        description:
-          "Turn what you're learning into something shareable. Templates for note-taking, study planning, and visual summaries.",
-        cta: "Try it",
-      },
-    ],
-  },
-] as const;
+const resources = await getCollection("resources");
+const numberWords = ["Zero", "One", "Two", "Three", "Four", "Five"];
+const countLabel = (count: number) => {
+  const countText = numberWords[count] ?? String(count);
+
+  return `${countText} ${count === 1 ? "tool" : "tools"}`;
+};
 ---
 
 <BaseLayout title="Resources — SheisFEM" active="resources">
@@ -158,33 +44,37 @@ const pillars = [
 
   <main class="wrap" id="directory">
     {
-      pillars.map((pillar) => (
-        <section class="pillar-block" data-pillar={pillar.key} id={pillar.key}>
-          <div class="pb-head">
-            <span class="pb-num">{pillar.num}</span>
-            <div class="pb-titles">
-              <span class="chip">
-                <PillarIcon pillar={pillar.key} />
-                {pillar.chip}
-              </span>
-              <h2>{pillar.title}</h2>
-              <div class="pb-count">{pillar.count}</div>
+      pillars.map((pillar) => {
+        const pillarResources = getPillarResources(resources, pillar.key);
+
+        return (
+          <section class="pillar-block" data-pillar={pillar.key} id={pillar.key}>
+            <div class="pb-head">
+              <span class="pb-num">{pillar.num}</span>
+              <div class="pb-titles">
+                <span class="chip">
+                  <PillarIcon pillar={pillar.key} />
+                  {pillar.chip}
+                </span>
+                <h2>{pillar.title}</h2>
+                <div class="pb-count">{countLabel(pillarResources.length)}</div>
+              </div>
             </div>
-          </div>
-          <div class="r-list">
-            {pillar.resources.map((resource) => (
-              <ResourceRow
-                href="#"
-                icon={resource.icon}
-                name={resource.name}
-                description={resource.description}
-                cta={resource.cta}
-                external
-              />
-            ))}
-          </div>
-        </section>
-      ))
+            <div class="r-list">
+              {pillarResources.map((resource) => (
+                <ResourceRow
+                  href={resource.data.url}
+                  icon={getResourceIcon(resource.data.name)}
+                  name={resource.data.name}
+                  description={resource.data.description}
+                  cta={getResourceCta(resource.data.name)}
+                  external
+                />
+              ))}
+            </div>
+          </section>
+        );
+      })
     }
 
     <div class="empty" id="empty">
