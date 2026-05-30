@@ -60,6 +60,25 @@ const {
         burger?.addEventListener("click", () => {
           links?.classList.toggle("open");
         });
+        document.addEventListener("click", (event) => {
+          if (!links?.classList.contains("open")) {
+            return;
+          }
+
+          const target = event.target;
+          if (!(target instanceof Node)) {
+            return;
+          }
+
+          if (!links.contains(target) && !burger?.contains(target)) {
+            links.classList.remove("open");
+          }
+        });
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            links?.classList.remove("open");
+          }
+        });
         links?.querySelectorAll("a").forEach((link) => {
           link.addEventListener("click", () => {
             links.classList.remove("open");

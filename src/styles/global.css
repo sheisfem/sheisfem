@@ -1290,6 +1290,16 @@ footer.colophon .c-bottom a:hover {
   line-height: 1.72;
 }
 
+.rc-inner .tagline {
+  margin: 18px 0 0;
+  color: var(--ink-soft);
+  font-family: "Caveat", cursive;
+  font-size: 1.8rem;
+  line-height: 1.1;
+  transform: rotate(-1deg);
+  transform-origin: left;
+}
+
 .tabs-bar {
   position: sticky;
   top: 71px;
@@ -1301,9 +1311,9 @@ footer.colophon .c-bottom a:hover {
 }
 
 .tabs {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 0;
-  flex-wrap: wrap;
 }
 
 .tab {
@@ -1318,6 +1328,7 @@ footer.colophon .c-bottom a:hover {
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.18em;
+  text-align: center;
   text-transform: uppercase;
   transition:
     background 0.18s ease,
@@ -1325,8 +1336,11 @@ footer.colophon .c-bottom a:hover {
 }
 
 .tab:first-child {
-  padding-left: 0;
   border-left: none;
+}
+
+.tab:last-child {
+  border-right: none;
 }
 
 .tab::after {
@@ -1342,11 +1356,12 @@ footer.colophon .c-bottom a:hover {
 
 .tab:hover,
 .tab.active {
+  background: var(--peach-wash);
   color: var(--ink);
 }
 
 .tab.active::after {
-  right: 0;
+  display: none;
 }
 
 .pillar-block {
@@ -1421,11 +1436,15 @@ footer.colophon .c-bottom a:hover {
     z-index: 55;
     display: flex;
     width: min(80vw, 330px);
+    height: 100dvh;
+    max-height: 100dvh;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 6px;
-    padding: 96px 32px 32px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 96px 32px calc(32px + env(safe-area-inset-bottom));
     border-left: 1.5px solid var(--ink);
     background: var(--cream);
     transform: translateX(100%);
@@ -1442,8 +1461,11 @@ footer.colophon .c-bottom a:hover {
     letter-spacing: 0.14em;
   }
 
-  .mast-cta {
-    display: none;
+  .mast-nav a.mast-cta {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: auto;
   }
 
   .mast-burger {
@@ -1513,8 +1535,20 @@ footer.colophon .c-bottom a:hover {
     top: 63px;
   }
 
-  .tab {
-    padding: 15px 18px;
+  .tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tab,
+  .tab:first-child {
+    padding: 15px 12px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .tab:nth-child(3n) {
+    border-right: none;
   }
 }
 
@@ -1542,6 +1576,12 @@ footer.colophon .c-bottom a:hover {
   }
 
   .folio-bar {
+    gap: 12px;
+    font-size: 0.56rem;
     letter-spacing: 0.18em;
+  }
+
+  .folio-bar .mid {
+    letter-spacing: 0.22em;
   }
 }
