@@ -3,7 +3,7 @@ import { collection, config, fields, singleton } from "@keystatic/core";
 export default config({
   storage: {
     kind: "github",
-    repo: "tomie-s/sheisfem",
+    repo: "sheisfem/sheisfem",
   },
   collections: {
     posts: collection({
