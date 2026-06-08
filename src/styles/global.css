@@ -1586,3 +1586,229 @@ footer.colophon .c-bottom a:hover {
     letter-spacing: 0.22em;
   }
 }
+
+.blog-cover {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.blog-cover .folio-bar {
+  margin-top: 0;
+}
+
+.bc-inner {
+  padding: 8px 0 80px;
+}
+
+.bc-inner h1 {
+  margin: 30px 0 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.6rem, 5.5vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  line-height: 0.92;
+}
+
+.bc-inner h1 em {
+  color: var(--orange);
+  font-style: italic;
+}
+
+.bc-inner .sub {
+  max-width: 50ch;
+  margin: 22px 0 0;
+  color: var(--ink-soft);
+  font-size: 1.18rem;
+  line-height: 1.72;
+}
+
+.bc-inner .tagline {
+  margin: 18px 0 0;
+  color: var(--ink-soft);
+  font-family: "Caveat", cursive;
+  font-size: 1.8rem;
+  line-height: 1.1;
+  transform: rotate(-1deg);
+  transform-origin: left;
+}
+
+.bc-empty {
+  padding: 100px 0;
+  border-top: 1.5px solid var(--ink);
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.bc-empty .serif {
+  display: block;
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.4rem;
+}
+
+.post-cover {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.post-cover .folio-bar {
+  margin-top: 0;
+}
+
+.pc-inner {
+  padding: 56px 0 72px;
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.pc-inner h1 {
+  max-width: 26ch;
+  margin: 20px 0 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.96;
+}
+
+.pc-inner .lede {
+  max-width: 52ch;
+  margin: 24px 0 0;
+  color: var(--ink-soft);
+  font-size: 1.12rem;
+  line-height: 1.72;
+}
+
+.post-body {
+  max-width: 72ch;
+  padding: 64px 0 56px;
+}
+
+.post-body p {
+  margin: 0 0 22px;
+  color: var(--ink-soft);
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+.post-body p:first-child::first-letter {
+  float: left;
+  margin: 6px 12px 0 0;
+  color: var(--orange);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 3.6rem;
+  font-weight: 600;
+  line-height: 0.72;
+}
+
+.post-body p strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.post-body h2 {
+  margin: 48px 0 14px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.55rem, 3vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.08;
+}
+
+.post-body h3 {
+  margin: 32px 0 12px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.post-body ul,
+.post-body ol {
+  margin: 0 0 22px;
+  padding-left: 28px;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.post-body li {
+  margin-bottom: 8px;
+}
+
+.post-body li strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.post-body hr {
+  margin: 44px 0;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+
+.post-body em {
+  font-style: italic;
+}
+
+.post-body a {
+  color: var(--orange);
+  text-decoration: underline;
+}
+
+.post-body a:hover {
+  color: var(--orange-deep);
+}
+
+.post-body blockquote {
+  margin: 32px 0;
+  padding: 20px 28px;
+  border-left: 3px solid var(--peach);
+  color: var(--ink-soft);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.post-comments {
+  max-width: 72ch;
+  padding: 40px 44px;
+  border-top: 1.5px solid var(--ink);
+  background: var(--cream);
+  margin-bottom: 56px;
+}
+
+.post-comments > .kicker {
+  margin: 0 0 32px;
+}
+
+.post-comments iframe {
+  display: block;
+  width: 100%;
+  min-height: 420px;
+}
+
+a.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 32px 0 56px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-family: "Jost", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.18s ease;
+}
+
+a.post-back:hover {
+  color: var(--orange);
+}
+
+a.post-back svg {
+  width: 16px;
+  height: 16px;
+}

@@ -1,6 +1,9 @@
 ---
+import { Image } from "astro:assets";
+import femLogo from "../assets/fem-logo.png";
+
 interface Props {
-  active?: "home" | "about" | "resources";
+  active?: "home" | "about" | "resources" | "blog";
 }
 
 const { active = "home" } = Astro.props;
@@ -10,7 +13,7 @@ const isActive = (page: Props["active"]) => (active === page ? "active" : "");
 <nav class="mast">
   <div class="mast-inner">
     <a class="mast-logo" href="/" aria-label="SheisFEM home">
-      <img src="/assets/fem-logo.png" alt="FEM logo" />
+      <Image src={femLogo} alt="FEM logo" />
       <div>
         <div class="lw">SheisFEM</div>
         <div class="ls">Female Earning More</div>
@@ -20,6 +23,7 @@ const isActive = (page: Props["active"]) => (active === page ? "active" : "");
       <a href="/" class={isActive("home")}>Home</a>
       <a href="/about" class={isActive("about")}>About</a>
       <a href="/resources" class={isActive("resources")}>Resources</a>
+      <a href="/blog" class={isActive("blog")}>Blog</a>
       <a href="https://ca.pinterest.com/sheisfem/" target="_blank" rel="noopener">Pinterest</a>
       <a class="mast-cta" href="https://www.instagram.com/sheisfem/" target="_blank" rel="noopener">
         Follow

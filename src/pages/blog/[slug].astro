@@ -1,0 +1,109 @@
+---
+import { createReader } from "@keystatic/core/reader";
+import Markdoc from "@markdoc/markdoc";
+import keystaticConfig from "../../../keystatic.config";
+import FolioBar from "../../components/FolioBar.astro";
+import PillarIcon from "../../components/PillarIcon.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+declare const process: { cwd(): string };
+
+export async function getStaticPaths() {
+  const reader = createReader(process.cwd(), keystaticConfig);
+  const slugs = await reader.collections.posts.list();
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const post = await reader.collections.posts.read(slug, { resolveLinkedFiles: true });
+if (!post) throw new Error(`Post not found: ${slug}`);
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const formatDate = (dateStr: string | null) => {
+  if (!dateStr) return "";
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return `${months[month - 1]} ${day}, ${year}`;
+};
+
+const pillarLabels: Record<string, string> = {
+  earns: "She Earns More",
+  builds: "She Builds More",
+  invests: "She Invests More",
+  lives: "She Lives More",
+  learns: "She Learns More",
+};
+
+const renderableTree = Markdoc.transform(post.content.node);
+const html = Markdoc.renderers.html(renderableTree);
+---
+
+<BaseLayout
+  title={`${post.title} — SheisFEM`}
+  description={post.excerpt ?? undefined}
+  active="blog"
+>
+  <header class="post-cover wrap">
+    <FolioBar
+      left={pillarLabels[post.pillar] ?? post.pillar}
+      middle="Field Notes"
+      right={formatDate(post.publishedDate)}
+    />
+    <div class="pc-inner">
+      <span class="chip">
+        <PillarIcon pillar={post.pillar} />
+        {pillarLabels[post.pillar] ?? post.pillar}
+      </span>
+      <h1>{post.title}</h1>
+      {post.excerpt && <p class="lede">{post.excerpt}</p>}
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post-body" set:html={html} />
+
+    {import.meta.env.PUBLIC_CUSDIS_APP_ID && (
+      <section class="post-comments">
+        <p class="kicker">Discussion</p>
+        <div
+          id="cusdis_thread"
+          data-host="https://cusdis.com"
+          data-app-id={import.meta.env.PUBLIC_CUSDIS_APP_ID}
+          data-page-id={slug}
+          data-page-url={Astro.url.href}
+          data-page-title={post.title}
+        ></div>
+        <script is:inline src="https://cusdis.com/js/cusdis.es.js" async defer></script>
+      </section>
+    )}
+
+    <a href="/blog" class="post-back">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+        style="transform: scaleX(-1)"
+      >
+        <path d="M5 12h14M13 6l6 6-6 6"></path>
+      </svg>
+      All field notes
+    </a>
+  </main>
+</BaseLayout>

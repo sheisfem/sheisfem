@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import femLogo from "../assets/fem-logo.png";
 import { getCurrentYear } from "../lib/issueWeek";
 
 const currentYear = getCurrentYear();
@@ -13,7 +15,7 @@ const currentYear = getCurrentYear();
     <div class="c-top">
       <div>
         <div class="c-logo">
-          <img src="/assets/fem-logo.png" alt="FEM" />
+          <Image src={femLogo} alt="FEM" />
           <div>
             <div class="c-name">SheisFEM</div>
             <div class="c-site">sheisfem.com</div>

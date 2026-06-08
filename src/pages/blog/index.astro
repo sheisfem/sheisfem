@@ -1,0 +1,104 @@
+---
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
+import FolioBar from "../../components/FolioBar.astro";
+import PillarIcon from "../../components/PillarIcon.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+declare const process: { cwd(): string };
+const reader = createReader(process.cwd(), keystaticConfig);
+const allPosts = await reader.collections.posts.all();
+
+const sorted = [...allPosts].sort((a, b) =>
+  (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? "")
+);
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const formatDate = (dateStr: string | null) => {
+  if (!dateStr) return "";
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return `${months[month - 1]} ${day}, ${year}`;
+};
+
+const pillarLabels: Record<string, string> = {
+  earns: "She Earns More",
+  builds: "She Builds More",
+  invests: "She Invests More",
+  lives: "She Lives More",
+  learns: "She Learns More",
+};
+---
+
+<BaseLayout
+  title="Field Notes — SheisFEM"
+  description="Real talk, field notes, and strategies for Canadian women ready to earn more."
+  active="blog"
+>
+  <header class="blog-cover wrap">
+    <FolioBar left="Field Notes" middle="The Blog" right="SheisFEM" />
+    <div class="bc-inner">
+      <h1>Real talk for women <em>earning</em> more.</h1>
+      <p class="sub">
+        Field notes, strategies, and hard-earned lessons from someone in the thick of it.
+      </p>
+      <p class="tagline">— written from experience, not theory.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    {
+      sorted.length === 0 ? (
+        <div class="bc-empty">
+          <span class="serif">No posts yet.</span>
+          <p>Field notes are on their way.</p>
+        </div>
+      ) : (
+        <div class="toc">
+          {sorted.map(({ slug, entry }, i) => (
+            <a href={`/blog/${slug}`} class="toc-row">
+              <span class="tnum">{String(i + 1).padStart(2, "0")}</span>
+              <div class="tbody">
+                <div class="tname">
+                  <PillarIcon pillar={entry.pillar} />
+                  {entry.title}
+                </div>
+                {entry.excerpt && <p class="tdesc">{entry.excerpt}</p>}
+                <div class="tgo">
+                  {entry.publishedDate && (
+                    <time datetime={entry.publishedDate}>
+                      {formatDate(entry.publishedDate)}
+                    </time>
+                  )}
+                  <svg
+                    class="arr"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6"></path>
+                  </svg>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </main>
+</BaseLayout>
