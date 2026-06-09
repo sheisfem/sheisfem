@@ -1,6 +1,7 @@
 # build output
 dist/
 .vercel/
+coverage/
 # generated types
 .astro/
 
@@ -25,3 +26,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vercel
+
+# TypeScript build cache
+*.tsbuildinfo

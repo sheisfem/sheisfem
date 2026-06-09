@@ -7,9 +7,12 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "tsc -b && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "test": "vitest run --coverage && astro build",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "type-check": "astro check",
     "lint": "biome lint . --write",
     "lint:check": "biome lint .",
@@ -35,6 +38,12 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@biomejs/biome": "^2.4.16",
-    "typescript": "^6.0.3"
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@vitest/coverage-v8": "^4.1.8",
+    "jsdom": "^29.1.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
   }
 }

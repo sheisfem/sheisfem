@@ -41,7 +41,7 @@ export default function CommentsSection({ appId, pageId, pageUrl, pageTitle }: P
       .catch(() => setLoadState("error"));
   }, [appId, pageId]);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
     setSubmitState("submitting");
     try {

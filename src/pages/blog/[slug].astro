@@ -5,6 +5,7 @@ import keystaticConfig from "../../../keystatic.config";
 import CommentsSection from "../../components/CommentsSection";
 import PillarIcon from "../../components/PillarIcon.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { enhancePostHtml, formatDateline, getReadMinutes } from "../../lib/blogPost";
 import "../../styles/blog-post.css";
 import "../../styles/blog-post-markers.css";
 
@@ -22,75 +23,12 @@ const reader = createReader(process.cwd(), keystaticConfig);
 const post = await reader.collections.posts.read(slug, { resolveLinkedFiles: true });
 if (!post) throw new Error(`Post not found: ${slug}`);
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-const formatDateline = (dateStr: string | null) => {
-  if (!dateStr) return "";
-  const [year, month, day] = dateStr.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day));
-  const suffix =
-    day % 10 === 1 && day !== 11
-      ? "st"
-      : day % 10 === 2 && day !== 12
-        ? "nd"
-        : day % 10 === 3 && day !== 13
-          ? "rd"
-          : "th";
-  return `${weekdays[date.getUTCDay()]} — ${months[month - 1]} ${day}${suffix}, ${year}`;
-};
-
 const pillarLabels: Record<string, string> = {
   earns: "She Earns More",
   builds: "She Builds More",
   invests: "She Invests More",
   lives: "She Lives More",
   learns: "She Learns More",
-};
-
-const enhancePostHtml = (rawHtml: string) => {
-  const fieldNotePattern = /(?:<p><strong>(\d+)\.\s*([\s\S]*?)<\/strong>\s*([\s\S]*?)<\/p>){2,}/g;
-
-  return rawHtml
-    .replace(/==([\s\S]*?)==/g, '<span class="annot">$1</span>')
-    .replace(/<p>\[\[note:\s*([\s\S]*?)\]\]<\/p>/g, '<p class="margin-note">$1</p>')
-    .replace(fieldNotePattern, (match) => {
-      const items = [
-        ...match.matchAll(/<p><strong>\d+\.\s*([\s\S]*?)<\/strong>\s*([\s\S]*?)<\/p>/g),
-      ];
-
-      return `<div class="fieldnotes">
-        <div class="fn-head">
-          <span class="script">Field notes</span>
-          <span class="line"></span>
-        </div>
-        <ol>
-          ${items.map((item) => `<li><strong>${item[1]}</strong> ${item[2]}</li>`).join("")}
-        </ol>
-      </div>`;
-    })
-    .replace(
-      /<hr><p>\[\[signoff:\s*([\s\S]*?)\]\]<\/p>/g,
-      `<div class="signoff">
-        <p>$1</p>
-        <span class="xo">Until next time,</span>
-        <div class="sig">xo, Tomi</div>
-      </div>`
-    );
 };
 
 const renderableTree = Markdoc.transform(post.content.node);
@@ -101,12 +39,7 @@ const sortedPosts = [...allPosts].sort((a, b) =>
 );
 const entryIndex = sortedPosts.findIndex((item) => item.slug === slug);
 const entryNumber = entryIndex >= 0 ? entryIndex + 1 : 1;
-const wordCount = html
-  .replace(/<[^>]*>/g, " ")
-  .trim()
-  .split(/\s+/)
-  .filter(Boolean).length;
-const readMinutes = Math.max(1, Math.round(wordCount / 220));
+const readMinutes = getReadMinutes(html);
 ---
 
 <BaseLayout

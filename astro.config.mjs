@@ -10,5 +10,8 @@ export default defineConfig({
   integrations: [react(), keystatic()],
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      chunkSizeWarningLimit: 3000,
+    },
   },
 });
