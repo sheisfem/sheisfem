@@ -67,13 +67,20 @@ The blog post template automatically applies the diary styling to every post. No
 
 Use these markers inside a post body:
 
+<img width="205" height="38" alt="Screenshot 2026-06-08 at 9 06 40 PM" src="https://github.com/user-attachments/assets/50757365-87d5-4056-9a98-668f2efeb332" />
+
 ```md
 ==This text gets the orange squiggly underline.==
 ```
 
+
+<img width="446" height="76" alt="Screenshot 2026-06-08 at 9 08 22 PM" src="https://github.com/user-attachments/assets/46191ae0-9cee-4a18-87d3-0466cc346a83" />
+
 ```md
 [[note: This becomes a handwritten margin note.]]
 ```
+
+<img width="794" height="171" alt="Screenshot 2026-06-08 at 9 09 07 PM" src="https://github.com/user-attachments/assets/1c20b897-cb49-4f49-ba72-b043cd000a98" />
 
 Consecutive numbered bold paragraphs become a paper-style field notes block:
 
@@ -84,6 +91,9 @@ Consecutive numbered bold paragraphs become a paper-style field notes block:
 
 **3. Third takeaway.** Supporting detail here.
 ```
+
+
+<img width="752" height="73" alt="Screenshot 2026-06-08 at 9 10 03 PM" src="https://github.com/user-attachments/assets/41dba0c9-c245-4b54-909e-986ac8cbab8c" />
 
 Use a signoff marker after a horizontal rule for the styled closing note:
 
