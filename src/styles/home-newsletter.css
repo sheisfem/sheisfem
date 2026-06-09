@@ -1,0 +1,124 @@
+.cta-grid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1.2fr 0.98fr;
+  gap: 56px;
+}
+
+.cta-grid .cta-text {
+  max-width: 14ch;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.3rem, 5vw, 4.2rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+
+.cta-grid .cta-text em {
+  color: #7e3f10;
+  font-style: italic;
+}
+
+.cta-grid .cta-sub {
+  max-width: 40ch;
+  margin-top: 22px;
+  color: var(--ink-soft);
+  font-family: "Jost", sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.cta-grid .cta-script {
+  display: block;
+  margin-top: 18px;
+  color: #8a4a1a;
+  font-family: "Caveat", cursive;
+  font-size: 1.7rem;
+  transform: rotate(-1deg);
+  transform-origin: left;
+}
+
+.news-panel {
+  padding: 40px 36px;
+  border: 1.5px solid var(--ink);
+  background: var(--cream);
+}
+
+.news-label {
+  display: block;
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.04;
+}
+
+.news-desc {
+  margin: 8px 0 22px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.news-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.news-row input {
+  min-width: 0;
+  flex: 1 1 200px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Jost", sans-serif;
+  font-size: 0.95rem;
+}
+
+.news-row input::placeholder {
+  color: var(--ink-soft);
+}
+
+.news-row input:focus {
+  border-color: var(--orange);
+  outline: none;
+}
+
+.news-row .btn {
+  flex: none;
+}
+
+.news-fine {
+  display: block;
+  margin-top: 14px;
+  color: var(--ink-soft);
+  font-family: "Jost", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.news-ok {
+  display: none;
+  margin: 4px 0 0;
+  color: #7e3f10;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  font-style: italic;
+}
+
+@media (max-width: 920px) {
+  .cta-grid {
+    align-items: start;
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+}
+
+@media (max-width: 700px) {
+  .news-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

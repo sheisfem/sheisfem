@@ -1,0 +1,314 @@
+.diary-band {
+  border-bottom: 1px dashed var(--line-strong);
+  background: var(--peach-wash);
+}
+
+.diary-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 11px var(--gutter);
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.diary-meta .script {
+  color: var(--orange);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.diary-cover {
+  padding-block: 56px;
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.diary-hero-grid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+  gap: clamp(32px, 6vw, 84px);
+}
+
+.diary-hero-copy {
+  min-width: 0;
+}
+
+.diary-cover .est {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.diary-cover .est::before,
+.diary-cover .est::after {
+  width: 34px;
+  height: 1px;
+  background: var(--line-strong);
+  content: "";
+}
+
+.diary-cover h1 {
+  margin: 22px 0 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.8rem, 6.2vw, 5.4rem);
+  font-weight: 500;
+  letter-spacing: -0.024em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.diary-cover h1 em {
+  color: var(--orange);
+  font-style: italic;
+}
+
+.diary-cover h1 .hero-break {
+  display: block;
+}
+
+.diary-cover h1 .hand {
+  display: block;
+  margin: 6px 0 0 2px;
+  color: var(--ink-soft);
+  font-family: "Caveat", cursive;
+  font-size: 0.46em;
+  font-weight: 600;
+  letter-spacing: 0;
+  transform: rotate(-2deg);
+}
+
+.diary-note {
+  position: relative;
+  padding: 34px 36px;
+  border: 1.5px solid var(--ink);
+  background: var(--peach-soft);
+  box-shadow: 10px 12px 0 rgba(255, 145, 77, 0.12);
+  transform: rotate(0.8deg);
+}
+
+.diary-note::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-color: transparent var(--paper) transparent transparent;
+  border-style: solid;
+  border-width: 0 30px 30px 0;
+  content: "";
+}
+
+.diary-note .note-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 12px;
+}
+
+.diary-note .note-icon {
+  display: grid;
+  width: 21px;
+  height: 21px;
+  place-items: center;
+  color: var(--orange);
+  transform: rotate(-8deg);
+}
+
+.diary-note .note-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.diary-note .script {
+  display: block;
+  color: var(--orange);
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1;
+  transform: rotate(-2deg);
+}
+
+.diary-note p {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.16rem;
+  font-style: italic;
+  line-height: 1.74;
+}
+
+.diary-note strong {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.entries {
+  padding-top: 34px;
+  padding-bottom: 90px;
+}
+
+.entry {
+  display: grid;
+  position: relative;
+  grid-template-columns: 188px 1fr;
+  gap: clamp(24px, 4vw, 56px);
+  margin: 0 0 30px;
+  padding: 34px 40px 34px 36px;
+  border: 1.5px solid var(--ink);
+  background: var(--cream);
+  box-shadow: 7px 8px 0 rgba(0, 0, 0, 0.06);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+.entry:nth-child(even) {
+  transform: rotate(0.35deg);
+}
+
+.entry:nth-child(odd) {
+  transform: rotate(-0.3deg);
+}
+
+.entry:hover {
+  background: var(--peach-wash);
+  box-shadow: 12px 14px 0 rgba(255, 145, 77, 0.22);
+  transform: rotate(0deg) translateY(-3px);
+}
+
+.entry::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-color: transparent var(--paper) transparent transparent;
+  border-style: solid;
+  border-width: 0 26px 26px 0;
+  content: "";
+}
+
+.entry .pin {
+  position: absolute;
+  top: -14px;
+  left: 30px;
+  padding: 4px 14px;
+  border: 1.5px solid var(--ink);
+  background: var(--peach);
+  font-family: "Caveat", cursive;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  transform: rotate(-3deg);
+}
+
+.entry .date-rail {
+  padding-right: clamp(16px, 2.2vw, 28px);
+  border-right: 1px dashed var(--line-strong);
+}
+
+.entry .d-script {
+  color: var(--ink);
+  font-family: "Caveat", cursive;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 0.92;
+  transform: rotate(-2deg);
+}
+
+.entry .d-year {
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.entry .d-no {
+  margin-top: 22px;
+  color: var(--line-strong);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.entry .e-filed {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.entry .e-filed svg {
+  width: 14px;
+  height: 14px;
+  color: var(--orange);
+}
+
+.entry h2 {
+  margin: 13px 0 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.5rem, 2.6vw, 2.15rem);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.02;
+}
+
+.entry .e-excerpt {
+  max-width: 56ch;
+  margin: 12px 0 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.68;
+}
+
+.entry .e-foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  color: var(--ink);
+  flex-wrap: wrap;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.entry .e-foot .read {
+  color: var(--ink-soft);
+}
+
+.entry .e-foot .open {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+  color: var(--orange);
+}
+
+.entry .e-foot .open svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.entry:hover .e-foot .open svg {
+  transform: translateX(5px);
+}

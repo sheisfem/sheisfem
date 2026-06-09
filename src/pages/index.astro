@@ -6,6 +6,8 @@ import ResourceRow from "../components/ResourceRow.astro";
 import { getFeaturedResources, getResourceIcon, pillars } from "../data/resources";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { formatIsoIssueWeek } from "../lib/issueWeek";
+import "../styles/home.css";
+import "../styles/home-newsletter.css";
 
 const resources = await getCollection("resources");
 const featuredResources = getFeaturedResources(resources);

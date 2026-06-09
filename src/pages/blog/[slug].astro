@@ -2,9 +2,11 @@
 import { createReader } from "@keystatic/core/reader";
 import Markdoc from "@markdoc/markdoc";
 import keystaticConfig from "../../../keystatic.config";
-import FolioBar from "../../components/FolioBar.astro";
+import CommentsSection from "../../components/CommentsSection";
 import PillarIcon from "../../components/PillarIcon.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/blog-post.css";
+import "../../styles/blog-post-markers.css";
 
 declare const process: { cwd(): string };
 
@@ -35,10 +37,21 @@ const months = [
   "December",
 ];
 
-const formatDate = (dateStr: string | null) => {
+const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+const formatDateline = (dateStr: string | null) => {
   if (!dateStr) return "";
   const [year, month, day] = dateStr.split("-").map(Number);
-  return `${months[month - 1]} ${day}, ${year}`;
+  const date = new Date(Date.UTC(year, month - 1, day));
+  const suffix =
+    day % 10 === 1 && day !== 11
+      ? "st"
+      : day % 10 === 2 && day !== 12
+        ? "nd"
+        : day % 10 === 3 && day !== 13
+          ? "rd"
+          : "th";
+  return `${weekdays[date.getUTCDay()]} — ${months[month - 1]} ${day}${suffix}, ${year}`;
 };
 
 const pillarLabels: Record<string, string> = {
@@ -49,8 +62,51 @@ const pillarLabels: Record<string, string> = {
   learns: "She Learns More",
 };
 
+const enhancePostHtml = (rawHtml: string) => {
+  const fieldNotePattern = /(?:<p><strong>(\d+)\.\s*([\s\S]*?)<\/strong>\s*([\s\S]*?)<\/p>){2,}/g;
+
+  return rawHtml
+    .replace(/==([\s\S]*?)==/g, '<span class="annot">$1</span>')
+    .replace(/<p>\[\[note:\s*([\s\S]*?)\]\]<\/p>/g, '<p class="margin-note">$1</p>')
+    .replace(fieldNotePattern, (match) => {
+      const items = [
+        ...match.matchAll(/<p><strong>\d+\.\s*([\s\S]*?)<\/strong>\s*([\s\S]*?)<\/p>/g),
+      ];
+
+      return `<div class="fieldnotes">
+        <div class="fn-head">
+          <span class="script">Field notes</span>
+          <span class="line"></span>
+        </div>
+        <ol>
+          ${items.map((item) => `<li><strong>${item[1]}</strong> ${item[2]}</li>`).join("")}
+        </ol>
+      </div>`;
+    })
+    .replace(
+      /<hr><p>\[\[signoff:\s*([\s\S]*?)\]\]<\/p>/g,
+      `<div class="signoff">
+        <p>$1</p>
+        <span class="xo">Until next time,</span>
+        <div class="sig">xo, Tomi</div>
+      </div>`
+    );
+};
+
 const renderableTree = Markdoc.transform(post.content.node);
-const html = Markdoc.renderers.html(renderableTree);
+const html = enhancePostHtml(Markdoc.renderers.html(renderableTree));
+const allPosts = await reader.collections.posts.all();
+const sortedPosts = [...allPosts].sort((a, b) =>
+  (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? "")
+);
+const entryIndex = sortedPosts.findIndex((item) => item.slug === slug);
+const entryNumber = entryIndex >= 0 ? entryIndex + 1 : 1;
+const wordCount = html
+  .replace(/<[^>]*>/g, " ")
+  .trim()
+  .split(/\s+/)
+  .filter(Boolean).length;
+const readMinutes = Math.max(1, Math.round(wordCount / 220));
 ---
 
 <BaseLayout
@@ -58,52 +114,75 @@ const html = Markdoc.renderers.html(renderableTree);
   description={post.excerpt ?? undefined}
   active="blog"
 >
-  <header class="post-cover wrap">
-    <FolioBar
-      left={pillarLabels[post.pillar] ?? post.pillar}
-      middle="Field Notes"
-      right={formatDate(post.publishedDate)}
-    />
-    <div class="pc-inner">
-      <span class="chip">
-        <PillarIcon pillar={post.pillar} />
-        {pillarLabels[post.pillar] ?? post.pillar}
-      </span>
-      <h1>{post.title}</h1>
-      {post.excerpt && <p class="lede">{post.excerpt}</p>}
+  <div class="diary-band">
+    <div class="wrap diary-meta">
+      <span>The SheisFEM Diary</span>
+      <span class="script">entry no. {String(entryNumber).padStart(2, "0")}</span>
+      <span>Field Notes</span>
     </div>
-  </header>
+  </div>
 
-  <main class="wrap">
-    <article class="post-body" set:html={html} />
+  <main class="post-shell">
+    <div class="wrap">
+      <a href="/blog" class="post-back-top">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        </svg>
+        All field notes
+      </a>
 
-    {import.meta.env.PUBLIC_CUSDIS_APP_ID && (
-      <section class="post-comments">
-        <p class="kicker">Discussion</p>
-        <div
-          id="cusdis_thread"
-          data-host="https://cusdis.com"
-          data-app-id={import.meta.env.PUBLIC_CUSDIS_APP_ID}
-          data-page-id={slug}
-          data-page-url={Astro.url.href}
-          data-page-title={post.title}
-        ></div>
-        <script is:inline src="https://cusdis.com/js/cusdis.es.js" async defer></script>
-      </section>
-    )}
+      <article class="post-page">
+        <p class="ph-dateline">{formatDateline(post.publishedDate)}</p>
+        <hr class="ph-rule" />
+        <h1>{post.title}</h1>
+        <div class="ph-meta">
+          <span class="filed">
+            <PillarIcon pillar={post.pillar} />
+            {pillarLabels[post.pillar] ?? post.pillar}
+          </span>
+          <span class="dot"></span>
+          <span>{readMinutes} min read</span>
+        </div>
 
-    <a href="/blog" class="post-back">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        aria-hidden="true"
-        style="transform: scaleX(-1)"
-      >
-        <path d="M5 12h14M13 6l6 6-6 6"></path>
-      </svg>
-      All field notes
-    </a>
+        {post.excerpt && <p class="post-lede">{post.excerpt}</p>}
+        <div class="post-body" set:html={html} />
+      </article>
+
+      <div class="reader-prompt">
+        What is one thing this diary entry made clearer? Leave it in the margins.
+      </div>
+
+      {import.meta.env.PUBLIC_CUSDIS_APP_ID && (
+        <section class="post-comments">
+          <p class="kicker">In the margins · Let's chat</p>
+          <CommentsSection
+            client:load
+            appId={import.meta.env.PUBLIC_CUSDIS_APP_ID}
+            pageId={slug}
+            pageUrl={Astro.url.href}
+            pageTitle={post.title}
+          />
+        </section>
+      )}
+
+      <a href="/blog" class="post-back">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        </svg>
+        All field notes
+      </a>
+    </div>
   </main>
 </BaseLayout>

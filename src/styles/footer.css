@@ -1,0 +1,121 @@
+footer.colophon {
+  padding: 80px 0 0;
+  background: var(--ink);
+  color: var(--cream);
+}
+
+footer.colophon .c-rule {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 248, 238, 0.5);
+  flex-wrap: wrap;
+  font-family: "Jost", sans-serif;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+footer.colophon .c-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 48px 0 0;
+  flex-wrap: wrap;
+}
+
+footer.colophon .c-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+footer.colophon .c-logo img {
+  width: 48px;
+  height: 48px;
+}
+
+footer.colophon .c-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 0.9;
+}
+
+footer.colophon .c-site {
+  margin-top: 6px;
+  color: var(--peach);
+  font-family: "Jost", sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+footer.colophon .c-tag {
+  margin: 22px 0 0;
+  color: var(--peach-soft);
+  font-family: "Caveat", cursive;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+footer.colophon .c-nav {
+  display: flex;
+  gap: 56px;
+  flex-wrap: wrap;
+}
+
+footer.colophon .c-col h5 {
+  margin: 0 0 16px;
+  color: var(--peach-soft);
+  font-family: "Jost", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+footer.colophon .c-col a {
+  display: block;
+  padding: 5px 0;
+  color: var(--cream);
+  font-size: 0.92rem;
+  opacity: 0.82;
+  text-decoration: none;
+  transition:
+    opacity 0.18s,
+    color 0.18s;
+}
+
+footer.colophon .c-col a:hover {
+  color: var(--peach);
+  opacity: 1;
+}
+
+footer.colophon .c-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 60px;
+  padding: 22px 0 34px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 248, 238, 0.55);
+  flex-wrap: wrap;
+  font-family: "Jost", sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+footer.colophon .c-bottom a {
+  color: rgba(255, 248, 238, 0.55);
+  text-decoration: none;
+}
+
+footer.colophon .c-bottom a:hover {
+  color: var(--peach);
+}

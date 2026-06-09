@@ -1,0 +1,349 @@
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 32px 0 56px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-family: "Jost", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.18s ease;
+}
+
+.post-back:hover {
+  color: var(--orange);
+}
+
+.post-back svg {
+  width: 16px;
+  height: 16px;
+}
+
+.diary-band {
+  border-bottom: 1px dashed var(--line-strong);
+  background: var(--peach-wash);
+}
+
+.diary-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 11px var(--gutter);
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.diary-meta .script {
+  color: var(--orange);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.post-shell {
+  padding: 40px 0 70px;
+}
+
+.post-page {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.post-back-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 760px;
+  margin: 0 auto 22px;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.18s ease;
+}
+
+.post-back-top:hover {
+  color: var(--orange);
+}
+
+.post-back-top svg {
+  width: 15px;
+  height: 15px;
+  transform: scaleX(-1);
+}
+
+.ph-dateline {
+  margin: 0;
+  color: var(--orange);
+  font-family: "Caveat", cursive;
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+  transform: rotate(-1.5deg);
+  transform-origin: left;
+}
+
+.ph-rule {
+  margin: 18px 0 24px;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+
+.post-page h1 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 4.6vw, 3.1rem);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1;
+}
+
+.ph-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 22px 0 0;
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.ph-meta .filed {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 12px;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+}
+
+.ph-meta .filed svg {
+  width: 15px;
+  height: 15px;
+  color: var(--orange);
+}
+
+.ph-meta .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+.post-lede {
+  position: relative;
+  margin: 34px 0 0;
+  padding: 28px 32px;
+  border: 1.5px solid var(--ink);
+  background: var(--cream);
+  box-shadow: 8px 9px 0 rgba(255, 145, 77, 0.1);
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.42;
+}
+
+.post-lede::before {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--orange);
+  content: "the gist";
+  font-family: "Caveat", cursive;
+  font-size: 1.35rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+  transform: rotate(-1.5deg);
+}
+
+.post-page .post-body {
+  max-width: none;
+  margin-top: 38px;
+  padding: 0;
+}
+
+.post-page .post-body p {
+  margin: 0 0 22px;
+  color: #3d342a;
+  font-size: 1.1rem;
+  line-height: 1.82;
+}
+
+.post-page .post-body > p:first-of-type::first-letter,
+.post-page .post-body article > p:first-of-type::first-letter {
+  float: left;
+  margin: 8px 14px 0 0;
+  color: var(--orange);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 4.2rem;
+  font-weight: 600;
+  line-height: 0.66;
+}
+
+.post-page .post-body h2 {
+  margin: 46px 0 14px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+}
+
+.post-page .post-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.post-page .post-body em {
+  font-style: italic;
+}
+
+.post-page .post-body hr {
+  margin: 44px 0;
+  border: none;
+  border-top: 1px dashed var(--line-strong);
+}
+
+.post-page .post-body p:last-child {
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.post-page .post-body blockquote {
+  margin: 44px -8px;
+  padding: 6px 0;
+  border: none;
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.22;
+  text-align: center;
+}
+
+.post-page .post-body a {
+  color: var(--orange);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.reader-prompt {
+  max-width: 760px;
+  margin: 30px auto 0;
+  padding: 24px 28px;
+  border: 1.5px solid var(--ink);
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.post-shell .post-comments {
+  max-width: 760px;
+  margin: 44px auto 0;
+  padding: 34px 40px 40px;
+  border: 1.5px solid var(--ink);
+  background: var(--cream);
+}
+
+.post-shell .post-comments > .kicker {
+  margin: 0 0 26px;
+}
+
+.post-shell .comments-list {
+  margin-bottom: 0;
+}
+
+.post-shell .comment-item {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-shell .comment-item:first-of-type {
+  border-top: 1px solid var(--line);
+}
+
+.post-shell .comment-meta {
+  gap: 16px;
+  margin-bottom: 9px;
+}
+
+.post-shell .comment-author {
+  font-size: 1.15rem;
+}
+
+.post-shell .comment-date {
+  color: var(--ink-soft);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+}
+
+.post-shell .comments-form-wrap {
+  margin-top: 34px;
+  padding-top: 30px;
+}
+
+.post-shell .comments-form input,
+.post-shell .comments-form textarea {
+  background: var(--paper);
+}
+
+.post-shell a.post-back {
+  display: flex;
+  justify-content: center;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 46px 0 0;
+  border-top: none;
+}
+
+.post-shell a.post-back svg {
+  transform: scaleX(-1);
+}
+
+@media (max-width: 720px) {
+  .ph-dateline {
+    font-size: 1.8rem;
+  }
+
+  .ph-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ph-meta .dot {
+    display: none;
+  }
+
+  .post-lede {
+    font-size: 1.35rem;
+  }
+
+  .post-shell .post-comments {
+    padding: 28px 24px 32px;
+  }
+}
