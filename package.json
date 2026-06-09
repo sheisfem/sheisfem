@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "tsc -b && astro build",
+    "build": "astro sync && tsc -b && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run --coverage && astro build",
