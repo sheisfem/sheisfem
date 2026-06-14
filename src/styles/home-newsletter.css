@@ -103,6 +103,29 @@
   letter-spacing: 0.04em;
 }
 
+.news-status {
+  min-height: 1.4em;
+  margin: 12px 0 0;
+  color: var(--ink-soft);
+  font-family: "Jost", sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.news-status:empty {
+  display: none;
+}
+
+.news-status[data-state="error"] {
+  color: #7e3f10;
+  font-weight: 600;
+}
+
+.news-row .btn[disabled] {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .news-ok {
   display: none;
   margin: 4px 0 0;

@@ -174,16 +174,25 @@ const pillarLabels: Record<string, string> = {
               A short note most weeks — the tools, habits, and ideas worth saving.
             </p>
             <div class="news-row">
-              <input id="news-email" type="email" required placeholder="your@email.com" aria-label="Email address" />
+              <input
+                id="news-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                placeholder="your@email.com"
+                aria-label="Email address"
+              />
               <button type="submit" class="btn btn-primary">
-                Subscribe
+                <span data-newsletter-button-text>Subscribe</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <path d="M5 12h14M13 6l6 6-6 6"></path>
                 </svg>
               </button>
             </div>
             <span class="news-fine">No spam. Unsubscribe anytime.</span>
-            <p class="news-ok">You're in. Watch your inbox.</p>
+            <p class="news-status" aria-live="polite" data-newsletter-status></p>
+            <p class="news-ok" aria-live="polite">You're in. Watch your inbox.</p>
           </form>
         </div>
       </div>
@@ -192,11 +201,54 @@ const pillarLabels: Record<string, string> = {
 
   <script>
     const form = document.querySelector("[data-newsletter-form]");
-    form?.addEventListener("submit", (event) => {
+    const setStatus = (message: string, type: string) => {
+      const status = form?.querySelector("[data-newsletter-status]");
+      if (!status) return;
+
+      status.textContent = message;
+      status.setAttribute("data-state", type);
+    };
+
+    form?.addEventListener("submit", async (event) => {
       event.preventDefault();
-      form.querySelector(".news-row")?.setAttribute("style", "display:none");
-      form.querySelector(".news-fine")?.setAttribute("style", "display:none");
-      form.querySelector(".news-ok")?.setAttribute("style", "display:block");
+
+      if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
+
+      const submitButton = form.querySelector('button[type="submit"]');
+      const buttonText = form.querySelector("[data-newsletter-button-text]");
+      const email = new FormData(form).get("email");
+
+      if (!(email instanceof File)) {
+        submitButton?.setAttribute("disabled", "");
+        if (buttonText) buttonText.textContent = "Subscribing...";
+        setStatus("Subscribing...", "loading");
+
+        try {
+          const response = await fetch("/api/newsletter", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+          });
+
+          const data = await response.json().catch(() => ({}));
+
+          if (!response.ok || data.ok !== true) {
+            throw new Error(data.error || "Something went wrong. Please try again.");
+          }
+
+          form.querySelector(".news-row")?.setAttribute("style", "display:none");
+          form.querySelector(".news-fine")?.setAttribute("style", "display:none");
+          form.querySelector(".news-status")?.setAttribute("style", "display:none");
+          form.querySelector(".news-ok")?.setAttribute("style", "display:block");
+        } catch (error) {
+          setStatus(error instanceof Error ? error.message : "Something went wrong. Please try again.", "error");
+        } finally {
+          submitButton?.removeAttribute("disabled");
+          if (buttonText) buttonText.textContent = "Subscribe";
+        }
+      }
     });
   </script>
 </BaseLayout>
