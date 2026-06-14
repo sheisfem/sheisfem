@@ -1,17 +1,55 @@
 ---
 import { getCollection } from "astro:content";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
 import FolioBar from "../components/FolioBar.astro";
 import PillarIcon from "../components/PillarIcon.astro";
 import ResourceRow from "../components/ResourceRow.astro";
-import { getFeaturedResources, getResourceIcon, pillars } from "../data/resources";
+import { getFeaturedResources, getResourceIcon } from "../data/resources";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { formatIsoIssueWeek } from "../lib/issueWeek";
 import "../styles/home.css";
 import "../styles/home-newsletter.css";
 
+declare const process: { cwd(): string };
+
 const resources = await getCollection("resources");
 const featuredResources = getFeaturedResources(resources);
+const reader = createReader(process.cwd(), keystaticConfig);
+const allPosts = await reader.collections.posts.all();
+const recentPosts = [...allPosts]
+  .sort((a, b) => (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? ""))
+  .slice(0, 2);
 const currentIssueWeekLabel = formatIsoIssueWeek();
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const formatDate = (dateStr: string | null) => {
+  if (!dateStr) return "";
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return `${months[month - 1]} ${day}, ${year}`;
+};
+
+const pillarLabels: Record<string, string> = {
+  earns: "She Earns More",
+  builds: "She Builds More",
+  invests: "She Invests More",
+  lives: "She Lives More",
+  learns: "She Learns More",
+};
 ---
 
 <BaseLayout title="SheisFEM — Diary of women who earn more" active="home">
@@ -34,20 +72,6 @@ const currentIssueWeekLabel = formatIsoIssueWeek();
           Tools, resources, and real talk for Canadian women ready to take control of their
           financial lives — no shame, no jargon, just what actually works.
         </p>
-        <div class="actions">
-          <a
-            class="btn btn-primary"
-            href="https://ca.pinterest.com/sheisfem/"
-            target="_blank"
-            rel="noopener"
-          >
-            Follow on Pinterest
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6"></path>
-            </svg>
-          </a>
-          <a class="btn btn-ghost" href="/resources">Browse resources</a>
-        </div>
       </div>
       <div class="cover-side">
         <div class="cover-block">
@@ -55,95 +79,60 @@ const currentIssueWeekLabel = formatIsoIssueWeek();
           <div class="cb-quote">Money is <em>permission</em> to live on your own terms.</div>
           <div class="cb-foot"><span class="cb-dot">F</span>sheisfem.com</div>
         </div>
-        <div class="cover-lines">
-          <div class="cl"><span class="n">01</span><span>The TFSA most women underuse</span></div>
-          <div class="cl"><span class="n">02</span><span>Start with what you have</span></div>
-          <div class="cl"><span class="n">03</span><span>The tools we actually use</span></div>
-        </div>
       </div>
     </div>
   </header>
 
-  <section class="section wrap" data-screen-label="Home — Contents">
-    <div class="contents-head">
-      <div>
-        <span class="kicker">Contents · The Five Pillars</span>
-        <h2 class="sec-title">Five ways<br />she grows</h2>
-      </div>
-      <p class="sec-sub">
-        Every story belongs to one pillar — five threads that run through everything we share,
-        from side-hustle income to the books that quietly reshape how you see money.
-      </p>
-    </div>
-
-    <div class="toc">
-      {
-        pillars.map((pillar) => (
-          <a class="toc-row" href={`/resources#${pillar.key}`}>
-            <span class="tnum">{pillar.num}</span>
-            <span class="tbody">
-              <span class="tname">
-                <PillarIcon pillar={pillar.key} />
-                {pillar.name}
-              </span>
-              <span class="tdesc">{pillar.desc}</span>
-              <span class="tgo">
-                Explore <span class="arr">→</span>
-              </span>
-            </span>
-          </a>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="section bg-cream" data-screen-label="Home — Field notes">
+  <section class="section bg-cream diary-section" data-screen-label="Home — Field notes">
     <div class="wrap">
       <div class="spread">
         <div class="sp-left">
-          <span class="kicker">From the diary</span>
-          <h2 class="sec-title" style="margin-bottom:.1em;">
-            Small habits.<br />Compounding<br /><em>freedom.</em>
-          </h2>
-          <p class="lead">
-            The pins worth saving aren't the loudest ones — they're the quiet, specific ones you
-            actually act on. Start with these three.
-          </p>
-          <a class="btn btn-peach" href="/resources" style="margin-top:30px;">See the tools</a>
+          <span class="kicker diary-kicker">From the diary</span>
+          <div class="sp-left-main">
+            <h2 class="sec-title" style="margin-bottom:.1em;">
+              Small habits.<br />Compounding<br /><em>freedom.</em>
+            </h2>
+            <p class="lead">
+              The latest notes on earning, building, investing, and living with more agency. Start
+              here, then keep reading.
+            </p>
+            <a class="btn btn-peach" href="/blog">All diary entries</a>
+          </div>
         </div>
         <div class="sp-right">
-          <div class="sp-note"><PillarIcon pillar="invests" />She Invests More · Field notes</div>
-          <div class="tiprow">
-            <span class="tn">1</span>
-            <div>
-              <div class="tt">Open your TFSA first</div>
-              <div class="td">It's the most powerful account most Canadian women underuse.</div>
-            </div>
+          <div class="sp-note">
+            <span class="sp-note-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path>
+              </svg>
+            </span>
+            Latest field notes
           </div>
-          <div class="tiprow">
-            <span class="tn">2</span>
-            <div>
-              <div class="tt">Start with what you have</div>
-              <div class="td">
-                You don't need a lot. You need to start. The habit matters more than the amount.
-              </div>
-            </div>
-          </div>
-          <div class="tiprow">
-            <span class="tn">3</span>
-            <div>
-              <div class="tt">Let it compound</div>
-              <div class="td">
-                Time in the market beats timing the market. Invest boring, and give it years.
-              </div>
-            </div>
+          <div class="diary-posts">
+            {
+              recentPosts.map(({ slug, entry }) => (
+                <a class="diary-post" href={`/blog/${slug}`}>
+                  <span class="dp-filed">
+                    <PillarIcon pillar={entry.pillar} />
+                    {pillarLabels[entry.pillar] ?? entry.pillar}
+                  </span>
+                  <h3>{entry.title}</h3>
+                  {entry.excerpt && <p>{entry.excerpt}</p>}
+                  <span class="dp-foot">
+                    {entry.publishedDate && <time datetime={entry.publishedDate}>{formatDate(entry.publishedDate)}</time>}
+                    <span>Open entry →</span>
+                  </span>
+                </a>
+              ))
+            }
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section wrap" data-screen-label="Home — Shortlist">
+  <section class="section tight wrap" data-screen-label="Home — Shortlist">
     <div class="sec-head">
       <div>
         <span class="kicker">Tools we actually use</span>
@@ -166,7 +155,7 @@ const currentIssueWeekLabel = formatIsoIssueWeek();
     </div>
   </section>
 
-  <section class="section peach" data-screen-label="Home — Newsletter CTA">
+  <section class="section peach newsletter-section" data-screen-label="Home — Newsletter CTA">
     <div class="wrap">
       <FolioBar left="Join the diary" middle="The newsletter" right="Straight to your inbox" />
       <div class="cta-grid" style="margin-top:52px;">
