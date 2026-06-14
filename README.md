@@ -58,7 +58,7 @@ Posts live in `src/content/posts/` as `.mdoc` files. Each post includes:
 - `title`
 - `pillar`: one of `earns`, `builds`, `invests`, `lives`, `learns`
 - `publishedDate`
-- `excerpt`
+- `excerpt` — renders above the post body as a styled lede with a handwritten orange "the gist" label (via `.post-lede`)
 - Markdoc body content
 
 The blog post template automatically applies the diary styling to every post. Normal Markdown works as expected. Use the optional authoring markers below when a post needs extra editorial texture.
