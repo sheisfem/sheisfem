@@ -15,6 +15,7 @@ export default defineConfig({
         "src/content.config.ts",
         "src/**/*.astro",
         "src/styles/**",
+        "src/env.d.ts",
       ],
       thresholds: {
         branches: 86,

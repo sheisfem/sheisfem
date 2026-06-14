@@ -35,7 +35,7 @@ const renderableTree = Markdoc.transform(post.content.node);
 const html = enhancePostHtml(Markdoc.renderers.html(renderableTree));
 const allPosts = await reader.collections.posts.all();
 const sortedPosts = [...allPosts].sort((a, b) =>
-  (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? "")
+  (a.entry.publishedDate ?? "").localeCompare(b.entry.publishedDate ?? "")
 );
 const entryIndex = sortedPosts.findIndex((item) => item.slug === slug);
 const entryNumber = entryIndex >= 0 ? entryIndex + 1 : 1;

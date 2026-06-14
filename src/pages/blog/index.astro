@@ -13,6 +13,12 @@ const sorted = [...allPosts].sort((a, b) =>
   (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? "")
 );
 
+const entryNumbers = new Map(
+  [...allPosts]
+    .sort((a, b) => (a.entry.publishedDate ?? "").localeCompare(b.entry.publishedDate ?? ""))
+    .map((post, i) => [post.slug, i + 1])
+);
+
 const months = [
   "January",
   "February",
@@ -107,7 +113,7 @@ const pillarLabels: Record<string, string> = {
               <div class="date-rail">
                 <div class="d-script">{date.monthDay}</div>
                 <div class="d-year">{date.year}</div>
-                <div class="d-no">entry no. {String(i + 1).padStart(2, "0")}</div>
+                <div class="d-no">entry no. {String(entryNumbers.get(slug) ?? i + 1).padStart(2, "0")}</div>
               </div>
               <div class="entry-main">
                 <span class="e-filed">
