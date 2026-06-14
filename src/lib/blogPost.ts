@@ -67,6 +67,10 @@ export const enhancePostHtml = (rawHtml: string) => {
       </div>`;
     })
     .replace(
+      /<a href="(https?:\/\/[^"]*)">/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer">'
+    )
+    .replace(
       /<hr><p>\[\[signoff:\s*([\s\S]*?)\]\]<\/p>/g,
       `<div class="signoff">
         <p>$1</p>
