@@ -1,23 +1,51 @@
 ---
 import "../styles/resource-row.css";
+import type { PillarKey } from "../data/resources";
+import PillarIcon from "./PillarIcon.astro";
 
 interface Props {
   href: string;
   icon: string;
   name: string;
   description: string;
+  pillars?: readonly PillarKey[];
   cta?: string;
   external?: boolean;
 }
 
-const { href, icon, name, description, cta = "Try it", external = false } = Astro.props;
+const {
+  href,
+  icon,
+  name,
+  description,
+  pillars = [],
+  cta = "Try it",
+  external = false,
+} = Astro.props;
+
+const pillarLabels: Record<PillarKey, string> = {
+  earns: "She Earns More",
+  builds: "She Builds More",
+  invests: "She Invests More",
+  lives: "She Lives More",
+  learns: "She Learns More",
+};
 ---
 
 <a class="r-row" href={href} target={external ? "_blank" : undefined} rel={external ? "noopener" : undefined}>
   <div class="ricon">{icon}</div>
-  <div>
-    <div class="rname">{name}</div>
-    <div class="rdesc">{description}</div>
+    <div>
+      <div class="rname">{name}</div>
+      <div class="rdesc">{description}</div>
+      {
+        pillars.length > 0 && (
+          <div class="r-pillars" aria-label={`Related pillars: ${pillars.map((pillar) => pillarLabels[pillar]).join(", ")}`}>
+            {pillars.map((pillar) => (
+              <span class="r-pillar"><PillarIcon pillar={pillar} />{pillarLabels[pillar]}</span>
+            ))}
+          </div>
+        )
+      }
   </div>
   <div class="rcta">{cta} <span class="arr">→</span></div>
 </a>

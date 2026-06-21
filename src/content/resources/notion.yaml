@@ -1,5 +1,6 @@
 name: Notion
-pillar: builds
+type: tool
+pillars: [builds]
 url: https://www.notion.com/
 description: Plan income goals, track every win, and run your whole business from one workspace.
 featured: false

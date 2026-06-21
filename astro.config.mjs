@@ -9,6 +9,12 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [react(), keystatic()],
   vite: {
+    resolve: {
+      dedupe: ["react", "react-dom"],
+    },
+    optimizeDeps: {
+      include: ["react", "react-dom", "react/jsx-runtime"],
+    },
     plugins: [tailwindcss()],
     build: {
       chunkSizeWarningLimit: 3000,

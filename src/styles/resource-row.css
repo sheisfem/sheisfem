@@ -22,6 +22,10 @@
   background: var(--peach-soft);
 }
 
+.r-list .r-row:last-child {
+  border-bottom: none;
+}
+
 .r-row .ricon {
   display: grid;
   place-items: center;
@@ -54,6 +58,34 @@
   margin-top: 6px;
   color: var(--ink-soft);
   font-size: 0.92rem;
+}
+
+.r-pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.r-pillar {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-family: "Jost", sans-serif;
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.r-pillar svg {
+  width: 12px;
+  height: 12px;
 }
 
 .r-row .rcta {
