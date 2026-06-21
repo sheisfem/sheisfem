@@ -64,8 +64,8 @@ describe("Given resource helpers", () => {
 
   describe("When getting a resource icon", () => {
     it("Then creates single-letter resource icons", () => {
-      expect(getResourceIcon("notion")).toBe("N");
-      expect(getResourceIcon("Canva")).toBe("C");
+      expect(getResourceIcon("notebook")).toBe("N");
+      expect(getResourceIcon("creative tool")).toBe("C");
     });
   });
 
