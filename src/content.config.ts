@@ -15,7 +15,8 @@ const resources = defineCollection({
   loader: glob({ pattern: "**/*.yaml", base: "./src/content/resources" }),
   schema: z.object({
     name: z.string(),
-    pillar: z.enum(["earns", "builds", "invests", "lives", "learns"]),
+    type: z.enum(["tool", "book", "podcast", "publication"]),
+    pillars: z.array(z.enum(["earns", "builds", "invests", "lives", "learns"])).min(1),
     url: z.string().url(),
     description: z.string(),
     featured: z.boolean().default(false),

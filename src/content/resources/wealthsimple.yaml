@@ -1,5 +1,6 @@
 name: Wealthsimple
-pillar: invests
+type: tool
+pillars: [invests]
 url: https://www.wealthsimple.com/en-ca
 description: Canada's simplest investing app. Start a TFSA or RRSP with as little as $1.
 featured: true

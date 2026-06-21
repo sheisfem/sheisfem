@@ -35,8 +35,18 @@ export default config({
       path: "src/content/resources/*",
       schema: {
         name: fields.slug({ name: { label: "Resource Name" } }),
-        pillar: fields.select({
-          label: "Pillar",
+        type: fields.select({
+          label: "Resource Type",
+          options: [
+            { label: "Tool or Platform", value: "tool" },
+            { label: "Book", value: "book" },
+            { label: "Podcast", value: "podcast" },
+            { label: "Publication", value: "publication" },
+          ],
+          defaultValue: "tool",
+        }),
+        pillars: fields.multiselect({
+          label: "Related Pillars",
           options: [
             { label: "She Earns More", value: "earns" },
             { label: "She Builds More", value: "builds" },
@@ -44,9 +54,9 @@ export default config({
             { label: "She Lives More", value: "lives" },
             { label: "She Learns More", value: "learns" },
           ],
-          defaultValue: "earns",
+          defaultValue: ["builds"],
         }),
-        url: fields.url({ label: "Affiliate URL" }),
+        url: fields.url({ label: "URL" }),
         description: fields.text({ label: "Description", multiline: true }),
         featured: fields.checkbox({ label: "Feature on homepage", defaultValue: false }),
       },

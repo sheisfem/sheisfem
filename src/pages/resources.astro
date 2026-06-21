@@ -2,73 +2,75 @@
 import { getCollection } from "astro:content";
 import Disclosure from "../components/Disclosure.astro";
 import FolioBar from "../components/FolioBar.astro";
-import PillarIcon from "../components/PillarIcon.astro";
 import ResourceRow from "../components/ResourceRow.astro";
-import { getPillarResources, getResourceCta, getResourceIcon, pillars } from "../data/resources";
+import {
+  getResourceCta,
+  getResourceIcon,
+  getSectionResources,
+  resourceSections,
+} from "../data/resources";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/resources.css";
 
 const resources = await getCollection("resources");
-const numberWords = ["Zero", "One", "Two", "Three", "Four", "Five"];
-const countLabel = (count: number) => {
-  const countText = numberWords[count] ?? String(count);
-
-  return `${countText} ${count === 1 ? "tool" : "tools"}`;
-};
+const countLabel = (count: number) => `${count} ${count === 1 ? "resource" : "resources"}`;
 ---
 
 <BaseLayout title="Resources — SheisFEM" active="resources">
   <header class="res-cover wrap" data-screen-label="Resources — Cover">
     <FolioBar left="Tools & Resources" middle="The directory" right="Curated for Canada" />
     <div class="rc-inner">
-      <h1>Tools we <em>actually</em> use.</h1>
+      <h1>Resources we <em>actually</em> use.</h1>
       <p class="sub">
-        Curated for Canadian women. Organized by what you're working on — earning, building,
-        investing, living, learning.
+        Curated for Canadian women. The tools, books, and media we actually return to — each tied
+        to the pillar it supports.
       </p>
-      <p class="tagline">— resources worth saving, not just scrolling past.</p>
+      <p class="tagline">— worth saving, not just scrolling past.</p>
     </div>
   </header>
 
   <div class="tabs-bar">
     <div class="wrap">
       <div class="tabs" id="tabs">
-        <button class="tab active" type="button" data-filter="all">All</button>
-        <button class="tab" type="button" data-filter="earns">Earns</button>
-        <button class="tab" type="button" data-filter="builds">Builds</button>
-        <button class="tab" type="button" data-filter="invests">Invests</button>
-        <button class="tab" type="button" data-filter="lives">Lives</button>
-        <button class="tab" type="button" data-filter="learns">Learns</button>
+        {
+          resourceSections.map((section, index) => (
+            <button
+              class:list={["tab", { active: index === 0 }]}
+              type="button"
+              data-filter={section.key}
+            >
+              {section.title}
+            </button>
+          ))
+        }
       </div>
     </div>
   </div>
 
   <main class="wrap" id="directory">
     {
-      pillars.map((pillar) => {
-        const pillarResources = getPillarResources(resources, pillar.key);
+      resourceSections.map((section) => {
+        const sectionResources = getSectionResources(resources, section.key);
 
         return (
-          <section class="pillar-block" data-pillar={pillar.key} id={pillar.key}>
+          <section class="pillar-block" data-section={section.key} id={section.key}>
             <div class="pb-head">
-              <span class="pb-num">{pillar.num}</span>
-              <div class="pb-titles">
-                <span class="chip">
-                  <PillarIcon pillar={pillar.key} />
-                  {pillar.chip}
-                </span>
-                <h2>{pillar.title}</h2>
-                <div class="pb-count">{countLabel(pillarResources.length)}</div>
+              <span class="pb-num">{section.num}</span>
+                <div class="pb-titles">
+                  <h2>{section.title}</h2>
+                  <p class="pb-subtitle">{section.subtitle}</p>
+                  <div class="pb-count">{countLabel(sectionResources.length)}</div>
               </div>
             </div>
             <div class="r-list">
-              {pillarResources.map((resource) => (
+              {sectionResources.map((resource) => (
                 <ResourceRow
                   href={resource.data.url}
                   icon={getResourceIcon(resource.data.name)}
                   name={resource.data.name}
                   description={resource.data.description}
-                  cta={getResourceCta(resource.data.name)}
+                  pillars={resource.data.pillars}
+                  cta={getResourceCta(resource.data.type)}
                   external
                 />
               ))}
@@ -94,17 +96,21 @@ const countLabel = (count: number) => {
     const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>(".tab"));
     const blocks = Array.from(document.querySelectorAll<HTMLElement>(".pillar-block"));
     const empty = document.getElementById("empty");
-    const valid = ["earns", "builds", "invests", "lives", "learns"];
+    const valid = ["explore", "read", "listen"];
 
     const applyFilter = (filter: string) => {
       let anyVisible = false;
+      let firstVisibleBlock: HTMLElement | undefined;
       blocks.forEach((block) => {
-        const show = filter === "all" || block.dataset.pillar === filter;
+        const show = block.dataset.section === filter;
         block.style.display = show ? "" : "none";
         if (show) {
           anyVisible = true;
+          firstVisibleBlock ??= block;
         }
+        block.classList.remove("first-visible");
       });
+      firstVisibleBlock?.classList.add("first-visible");
       empty?.classList.toggle("show", !anyVisible);
       tabs.forEach((tab) => {
         tab.classList.toggle("active", tab.dataset.filter === filter);
@@ -116,14 +122,12 @@ const countLabel = (count: number) => {
         const filter = tab.dataset.filter ?? "all";
         applyFilter(filter);
         if (history.replaceState) {
-          history.replaceState(null, "", filter === "all" ? location.pathname : `#${filter}`);
+          history.replaceState(null, "", filter === "explore" ? location.pathname : `#${filter}`);
         }
       });
     });
 
     const hash = (location.hash || "").replace("#", "");
-    if (valid.includes(hash)) {
-      applyFilter(hash);
-    }
+    applyFilter(valid.includes(hash) ? hash : "explore");
   </script>
 </BaseLayout>

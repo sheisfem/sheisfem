@@ -45,29 +45,75 @@ export const pillars = [
 
 export type PillarKey = (typeof pillars)[number]["key"];
 export type ResourceEntry = CollectionEntry<"resources">;
+export type ResourceType = ResourceEntry["data"]["type"];
+export type ResourceSectionKey = "explore" | "read" | "listen";
 
-const pillarOrder = new Map<PillarKey, number>(pillars.map((pillar, index) => [pillar.key, index]));
+export const resourceSections = [
+  {
+    key: "explore",
+    num: "01",
+    title: "Explore",
+    subtitle: "Tools and platforms worth having in your corner.",
+    types: ["tool"],
+  },
+  {
+    key: "read",
+    num: "02",
+    title: "Read",
+    subtitle: "Books and publications to come back to.",
+    types: ["book", "publication"],
+  },
+  {
+    key: "listen",
+    num: "03",
+    title: "Listen",
+    subtitle: "Conversations worth taking with you.",
+    types: ["podcast"],
+  },
+] as const satisfies ReadonlyArray<{
+  key: ResourceSectionKey;
+  num: string;
+  title: string;
+  subtitle: string;
+  types: readonly ResourceType[];
+}>;
+
+const typeOrder = new Map<ResourceType, number>([
+  ["tool", 0],
+  ["book", 1],
+  ["podcast", 2],
+  ["publication", 3],
+]);
 
 export const getResourceIcon = (name: string) => name.charAt(0).toUpperCase();
 
-export const getResourceCta = (name: string) =>
-  name.toLowerCase().includes("amazon") ? "Shop" : "Try it";
+export const getResourceCta = (type: ResourceType) => {
+  if (type === "book") return "Shop";
+  if (type === "podcast") return "Listen";
+  if (type === "publication") return "Read";
+
+  return "Try it";
+};
 
 export const sortResources = (resources: ResourceEntry[]) =>
   [...resources].sort((a, b) => {
-    const pillarDelta =
-      (pillarOrder.get(a.data.pillar) ?? Number.MAX_SAFE_INTEGER) -
-      (pillarOrder.get(b.data.pillar) ?? Number.MAX_SAFE_INTEGER);
+    const typeDelta =
+      (typeOrder.get(a.data.type) ?? Number.MAX_SAFE_INTEGER) -
+      (typeOrder.get(b.data.type) ?? Number.MAX_SAFE_INTEGER);
 
-    if (pillarDelta !== 0) {
-      return pillarDelta;
+    if (typeDelta !== 0) {
+      return typeDelta;
     }
 
     return a.id.localeCompare(b.id);
   });
 
-export const getPillarResources = (resources: ResourceEntry[], pillar: PillarKey) =>
-  sortResources(resources.filter((resource) => resource.data.pillar === pillar));
+export const getSectionResources = (resources: ResourceEntry[], section: ResourceSectionKey) => {
+  const types = (resourceSections.find((item) => item.key === section)?.types ??
+    []) as readonly ResourceType[];
+
+  return sortResources(resources.filter((resource) => types.includes(resource.data.type)));
+};
 
 export const getFeaturedResources = (resources: ResourceEntry[]) =>
   sortResources(resources.filter((resource) => resource.data.featured));

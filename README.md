@@ -36,6 +36,7 @@ SheisFEM is an Astro site for personal finance, career growth, resources, and fi
 | `src/pages/` | Astro routes for home, about, resources, and blog |
 | `src/pages/blog/index.astro` | Blog index page |
 | `src/pages/blog/[slug].astro` | Individual blog post template |
+| `src/pages/api/newsletter.ts` | Newsletter signup endpoint backed by Kit |
 | `src/content/posts/` | Keystatic blog posts, stored as `.mdoc` |
 | `src/content/resources/` | Resource directory entries, stored as `.yaml` |
 | `src/components/` | Shared Astro and React components |
@@ -110,12 +111,14 @@ These markers are transformed in `src/pages/blog/[slug].astro` by `enhancePostHt
 Resources live in `src/content/resources/` as `.yaml` files. Each resource includes:
 
 - `name`
-- `pillar`
+- `type`: one of `tool`, `book`, `podcast`, `publication`
+- `pillars`: one or more related pillar keys
 - `url`
 - `description`
 - `featured`
 
-Featured resources appear on the homepage shortlist.
+The directory groups resources into Explore (tools), Read (books and publications), and Listen
+(podcasts). Featured resources appear on the homepage shortlist.
 
 ### Homepage Singleton
 
@@ -130,6 +133,21 @@ PUBLIC_CUSDIS_APP_ID=your-cusdis-app-id
 ```
 
 Without that variable, blog posts render without the comments section.
+
+## Newsletter
+
+The homepage newsletter form posts to `/api/newsletter`, which creates a subscriber in Kit and
+then adds them to a form or tag. Configure these server-side environment variables:
+
+```sh
+KIT_API_KEY=your-kit-api-key
+KIT_FORM_ID=your-kit-form-id
+# Or use a tag when no form ID is configured:
+KIT_TAG_ID=your-kit-tag-id
+```
+
+`KIT_API_KEY` and at least one of `KIT_FORM_ID` or `KIT_TAG_ID` are required. When both are set,
+the form ID takes precedence.
 
 ## Five Pillars
 

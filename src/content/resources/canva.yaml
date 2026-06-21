@@ -1,5 +1,6 @@
 name: Canva
-pillar: builds
+type: tool
+pillars: [builds, lives]
 url: https://www.canva.com/
-description: Design your brand without a designer. Pins, logos, social graphics — all in one place.
+description: Design your brand, social graphics, mood boards, and goal trackers in one place.
 featured: true

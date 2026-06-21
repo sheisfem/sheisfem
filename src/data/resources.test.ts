@@ -1,31 +1,34 @@
 import { describe, expect, it } from "vitest";
 import {
   getFeaturedResources,
-  getPillarResources,
   getResourceCta,
   getResourceIcon,
+  getSectionResources,
   type PillarKey,
   pillars,
   type ResourceEntry,
+  type ResourceType,
+  resourceSections,
   sortResources,
 } from "./resources";
 
 const resource = (
   id: string,
-  pillar: PillarKey,
-  options: { featured?: boolean; name?: string } = {}
+  type: ResourceType,
+  options: { featured?: boolean; name?: string; pillars?: PillarKey[] } = {}
 ) =>
   ({
     id,
     data: {
       name: options.name ?? id,
-      pillar,
+      type,
+      pillars: options.pillars ?? ["builds"],
       featured: options.featured ?? false,
     },
   }) as ResourceEntry;
 
 describe("Given resource helpers", () => {
-  describe("When reading pillar metadata", () => {
+  describe("When reading resource metadata", () => {
     it("Then keeps pillars in the intended editorial order", () => {
       expect(pillars.map((pillar) => pillar.key)).toEqual([
         "earns",
@@ -33,6 +36,28 @@ describe("Given resource helpers", () => {
         "invests",
         "lives",
         "learns",
+      ]);
+    });
+
+    it("Then keeps resource sections and their editorial labels in directory order", () => {
+      expect(
+        resourceSections.map(({ key, title, subtitle }) => ({ key, title, subtitle }))
+      ).toEqual([
+        {
+          key: "explore",
+          title: "Explore",
+          subtitle: "Tools and platforms worth having in your corner.",
+        },
+        {
+          key: "read",
+          title: "Read",
+          subtitle: "Books and publications to come back to.",
+        },
+        {
+          key: "listen",
+          title: "Listen",
+          subtitle: "Conversations worth taking with you.",
+        },
       ]);
     });
   });
@@ -45,47 +70,55 @@ describe("Given resource helpers", () => {
   });
 
   describe("When getting resource CTA copy", () => {
-    it("Then uses Amazon-specific copy and a default for other resources", () => {
-      expect(getResourceCta("Amazon — Money Books")).toBe("Shop");
-      expect(getResourceCta("Wealthsimple")).toBe("Try it");
+    it("Then matches the action to the resource type", () => {
+      expect(getResourceCta("tool")).toBe("Try it");
+      expect(getResourceCta("book")).toBe("Shop");
+      expect(getResourceCta("podcast")).toBe("Listen");
+      expect(getResourceCta("publication")).toBe("Read");
     });
   });
 
   describe("When sorting resources", () => {
-    it("Then sorts by pillar order and then by id", () => {
+    it("Then sorts by type order and then by id", () => {
       const sorted = sortResources([
-        resource("wealthsimple", "invests"),
-        resource("canva-b", "builds"),
-        resource("neo", "earns"),
-        resource("amazon-b", "builds"),
+        resource("wealthsimple", "tool"),
+        resource("economist", "publication"),
+        resource("millionaire-teacher", "book"),
+        resource("ark-fyi", "podcast"),
       ]);
 
-      expect(sorted.map((item) => item.id)).toEqual(["neo", "amazon-b", "canva-b", "wealthsimple"]);
+      expect(sorted.map((item) => item.id)).toEqual([
+        "wealthsimple",
+        "millionaire-teacher",
+        "ark-fyi",
+        "economist",
+      ]);
     });
   });
 
-  describe("When filtering resources for a pillar", () => {
-    it("Then filters and sorts resources for a pillar", () => {
+  describe("When getting resources for a directory section", () => {
+    it("Then groups books and publications together as reading", () => {
       const resources = [
-        resource("z-builds", "builds"),
-        resource("earns", "earns"),
-        resource("a-builds", "builds"),
+        resource("economist", "publication"),
+        resource("claude", "tool"),
+        resource("ted-talks", "podcast"),
+        resource("co-intelligence", "book"),
       ];
 
-      expect(getPillarResources(resources, "builds").map((item) => item.id)).toEqual([
-        "a-builds",
-        "z-builds",
+      expect(getSectionResources(resources, "read").map((item) => item.id)).toEqual([
+        "co-intelligence",
+        "economist",
       ]);
     });
   });
 
   describe("When getting featured resources", () => {
-    it("Then returns featured resources sorted by pillar priority", () => {
+    it("Then returns featured resources in directory order", () => {
       const resources = [
-        resource("investing", "invests", { featured: true }),
-        resource("building", "builds", { featured: true }),
-        resource("learning", "learns"),
-        resource("earning", "earns", { featured: true }),
+        resource("investing", "podcast", { featured: true }),
+        resource("building", "book", { featured: true }),
+        resource("learning", "publication"),
+        resource("earning", "tool", { featured: true }),
       ];
 
       expect(getFeaturedResources(resources).map((item) => item.id)).toEqual([

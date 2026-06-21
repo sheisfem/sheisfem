@@ -1,0 +1,6 @@
+name: ChatGPT + Codex
+type: tool
+pillars: [builds]
+url: https://openai.com
+description: Use ChatGPT to learn and create faster, and Codex to turn your ideas into working code.
+featured: false
