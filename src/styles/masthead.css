@@ -102,9 +102,10 @@
   background: var(--orange);
 }
 
-.mast-cta svg {
-  width: 13px;
-  height: 13px;
+.mast-cta-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
 }
 
 .mast-nav a.mast-cta {

@@ -33,7 +33,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  padding: 11px var(--gutter);
+  padding: 13px var(--gutter);
   color: var(--ink-soft);
   flex-wrap: wrap;
   font-size: 0.64rem;
@@ -47,6 +47,7 @@
   font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: 0;
+  line-height: 1;
   text-transform: none;
 }
 

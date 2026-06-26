@@ -27,10 +27,12 @@ const isActive = (page: Props["active"]) => (active === page ? "active" : "");
       <a href="/blog" class={isActive("blog")}>Blog</a>
       <a href="https://ca.pinterest.com/sheisfem/" target="_blank" rel="noopener">Pinterest</a>
       <a class="mast-cta" href="https://www.instagram.com/sheisfem/" target="_blank" rel="noopener">
-        Follow
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        <svg class="mast-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+          <circle cx="12" cy="12" r="4"></circle>
+          <circle cx="17.5" cy="6.5" r="1"></circle>
         </svg>
+        Follow
       </a>
     </div>
     <button class="mast-burger" id="navBurger" type="button" aria-label="Menu">

@@ -116,4 +116,6 @@ export const getSectionResources = (resources: ResourceEntry[], section: Resourc
 };
 
 export const getFeaturedResources = (resources: ResourceEntry[]) =>
-  sortResources(resources.filter((resource) => resource.data.featured));
+  resources
+    .filter((resource) => resource.data.featured)
+    .sort((a, b) => a.data.name.localeCompare(b.data.name));

@@ -3,4 +3,4 @@ type: tool
 pillars: [builds]
 url: https://claude.ai
 description: An AI thinking partner for research, writing, planning, and turning a rough idea into useful next steps.
-featured: false
+featured: true

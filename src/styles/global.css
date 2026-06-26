@@ -30,6 +30,12 @@
 
   --maxw: 1240px;
   --gutter: 48px;
+  --hero-title-size: clamp(2.45rem, 5.4vw, 4.95rem);
+  --hero-title-leading: 0.9;
+  --hero-title-tracking: -0.024em;
+  --hero-top-padding: 52px;
+  --hero-script-size: clamp(2rem, 3vw, 2.3rem);
+  --hero-script-leading: 1.1;
 }
 
 * {

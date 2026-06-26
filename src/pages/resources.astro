@@ -20,12 +20,27 @@ const countLabel = (count: number) => `${count} ${count === 1 ? "resource" : "re
   <header class="res-cover wrap" data-screen-label="Resources — Cover">
     <FolioBar left="Tools & Resources" middle="The directory" right="Curated for Canada" />
     <div class="rc-inner">
-      <h1>Resources we <em>actually</em> use.</h1>
-      <p class="sub">
-        Curated for Canadian women. The tools, books, and media we actually return to — each tied
-        to the pillar it supports.
-      </p>
-      <p class="tagline">— worth saving, not just scrolling past.</p>
+      <div class="rc-copy">
+        <h1>Resources we<br /><em>actually</em> use.</h1>
+        <p class="tagline">— worth saving, not just scrolling past.</p>
+        <p class="sub">
+          Curated for Canadian women. The tools, books, and media we actually return to — each tied
+          to the pillar it supports.
+        </p>
+      </div>
+      <aside class="rc-ledger" aria-label="Resource directory summary">
+        <div class="rc-ledger-total">{countLabel(resources.length)}</div>
+        <div class="rc-ledger-rows">
+          {
+            resourceSections.map((section) => (
+              <div class="rc-ledger-row">
+                <span>{section.title}</span>
+                <strong>{getSectionResources(resources, section.key).length}</strong>
+              </div>
+            ))
+          }
+        </div>
+      </aside>
     </div>
   </header>
 

@@ -113,18 +113,21 @@ describe("Given resource helpers", () => {
   });
 
   describe("When getting featured resources", () => {
-    it("Then returns featured resources in directory order", () => {
+    it("Then returns featured resources alphabetically by name", () => {
       const resources = [
-        resource("investing", "podcast", { featured: true }),
-        resource("building", "book", { featured: true }),
-        resource("learning", "publication"),
-        resource("earning", "tool", { featured: true }),
+        resource("the-economist", "publication", { featured: true, name: "The Economist" }),
+        resource("claude", "tool", { featured: true, name: "Claude" }),
+        resource("canva", "tool", { name: "Canva" }),
+        resource("morning-brew-daily", "podcast", {
+          featured: true,
+          name: "Morning Brew Daily",
+        }),
       ];
 
-      expect(getFeaturedResources(resources).map((item) => item.id)).toEqual([
-        "earning",
-        "building",
-        "investing",
+      expect(getFeaturedResources(resources).map((item) => item.data.name)).toEqual([
+        "Claude",
+        "Morning Brew Daily",
+        "The Economist",
       ]);
     });
   });
