@@ -85,12 +85,20 @@
   right: 0;
 }
 
+.mast-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .mast-cta {
   display: inline-flex;
   align-items: center;
   flex: none;
   gap: 8px;
-  padding: 11px 32px;
+  justify-content: center;
+  width: 146px;
+  padding: 11px 18px;
   background: var(--ink);
   color: var(--cream);
   line-height: 1;
@@ -109,7 +117,7 @@
 }
 
 .mast-nav a.mast-cta {
-  padding: 11px 32px;
+  padding: 11px 18px;
   color: var(--cream);
 }
 
@@ -166,11 +174,18 @@
     letter-spacing: 0.14em;
   }
 
-  .mast-nav a.mast-cta {
-    display: inline-flex;
-    justify-content: center;
+  .mast-actions {
     width: 100%;
     margin-top: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .mast-nav a.mast-cta {
+    display: inline-flex;
+    width: 100%;
+    margin-top: 0;
   }
 
   .mast-burger {

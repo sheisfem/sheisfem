@@ -25,15 +25,24 @@ const isActive = (page: Props["active"]) => (active === page ? "active" : "");
       <a href="/about" class={isActive("about")}>About</a>
       <a href="/resources" class={isActive("resources")}>Resources</a>
       <a href="/blog" class={isActive("blog")}>Blog</a>
-      <a href="https://ca.pinterest.com/sheisfem/" target="_blank" rel="noopener">Pinterest</a>
-      <a class="mast-cta" href="https://www.instagram.com/sheisfem/" target="_blank" rel="noopener">
-        <svg class="mast-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-          <circle cx="12" cy="12" r="4"></circle>
-          <circle cx="17.5" cy="6.5" r="1"></circle>
-        </svg>
-        Follow
-      </a>
+      <div class="mast-actions" aria-label="Social links">
+        <a class="mast-cta" href="https://ca.pinterest.com/sheisfem/" target="_blank" rel="noopener">
+          <svg class="mast-cta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M12.2 2.5c-5.1 0-7.7 3.5-7.7 6.5 0 1.9.7 3.5 2.3 4.1.3.1.5 0 .6-.3l.2-.9c.1-.3.1-.4-.2-.7-.4-.5-.7-1.1-.7-2 0-2.7 2-5.1 5.3-5.1 2.9 0 4.5 1.8 4.5 4.1 0 3.1-1.4 5.8-3.5 5.8-1.2 0-2-.9-1.7-2.1.3-1.4 1-2.9 1-3.9 0-.9-.5-1.7-1.5-1.7-1.2 0-2.1 1.2-2.1 2.8 0 1 .3 1.7.3 1.7l-1.4 5.8c-.4 1.7-.1 3.8-.1 4 0 .1.2.2.3.1.1-.1 1.5-1.9 2-3.6.1-.5.8-3.1.8-3.1.4.8 1.6 1.5 2.8 1.5 3.7 0 6.1-3.3 6.1-7.8 0-3.4-2.9-6.5-7.3-6.5Z"
+            ></path>
+          </svg>
+          Pinterest
+        </a>
+        <a class="mast-cta" href="https://www.instagram.com/sheisfem/" target="_blank" rel="noopener">
+          <svg class="mast-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.5" cy="6.5" r="1"></circle>
+          </svg>
+          Instagram
+        </a>
+      </div>
     </div>
     <button class="mast-burger" id="navBurger" type="button" aria-label="Menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
