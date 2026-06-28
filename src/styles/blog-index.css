@@ -3,7 +3,7 @@
   background: var(--peach-wash);
 }
 
-.diary-meta {
+.diary-band .diary-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
