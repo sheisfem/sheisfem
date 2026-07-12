@@ -1,0 +1,56 @@
+---
+import { formatBlogDate, formatEntryDate, type Pillar, pillarLabels } from "../lib/blogIndex";
+import PillarIcon from "./PillarIcon.astro";
+
+interface Props {
+  slug: string;
+  entry: {
+    title: string;
+    pillar: Pillar;
+    publishedDate: string | null;
+    excerpt?: string;
+  };
+  entryNumber: number;
+  isLatest?: boolean;
+}
+
+const { slug, entry, entryNumber, isLatest = false } = Astro.props;
+const date = formatEntryDate(entry.publishedDate);
+const pillarLabel = pillarLabels[entry.pillar];
+---
+
+<a
+  href={`/blog/${slug}`}
+  class="entry"
+  data-entry
+  data-pillar={entry.pillar}
+  data-date={entry.publishedDate}
+  data-title={entry.title}
+  data-excerpt={entry.excerpt ?? ""}
+  data-search={`${entry.title} ${entry.excerpt ?? ""} ${pillarLabel}`.toLowerCase()}
+>
+  {isLatest && <span class="pin" data-pin>Latest</span>}
+  <div class="date-rail">
+    <div class="d-script">{date.monthDay}</div>
+    <div class="d-year">{date.year}</div>
+    <div class="d-no">entry no. {String(entryNumber).padStart(2, "0")}</div>
+  </div>
+  <div class="entry-main">
+    <span class="e-filed">
+      <PillarIcon pillar={entry.pillar} />
+      {pillarLabel}
+    </span>
+    <h2 data-title-target>{entry.title}</h2>
+    {entry.excerpt && <p class="e-excerpt" data-excerpt-target>{entry.excerpt}</p>}
+    <div class="e-foot">
+      {entry.publishedDate && <time datetime={entry.publishedDate}>{formatBlogDate(entry.publishedDate)}</time>}
+      <span class="read">Field note</span>
+      <span class="open">
+        Open entry
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6"></path>
+        </svg>
+      </span>
+    </div>
+  </div>
+</a>

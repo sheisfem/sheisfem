@@ -27,11 +27,12 @@
 @media (max-width: 600px) {
   .folio-bar {
     gap: 12px;
+    flex-wrap: nowrap;
     font-size: 0.56rem;
     letter-spacing: 0.18em;
   }
 
   .folio-bar .mid {
-    letter-spacing: 0.22em;
+    display: none;
   }
 }

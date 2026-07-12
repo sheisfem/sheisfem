@@ -1,0 +1,48 @@
+---
+import { filterLabels } from "../lib/blogIndex";
+import PillarIcon from "./PillarIcon.astro";
+---
+
+<div class="find-band" id="findBand">
+  <div class="wrap find-inner">
+    <div class="find-search" id="searchWrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Search the diary — titles, topics, keywords..."
+        autocomplete="off"
+        aria-label="Search posts"
+      />
+      <button class="clear" id="searchClear" type="button" aria-label="Clear search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="find-tools">
+      <div class="find-filters" id="filters" role="group" aria-label="Filter by pillar">
+        {
+          filterLabels.map(({ pillar, label }) => (
+            <button class="fchip" type="button" data-pillar={pillar} aria-pressed={pillar === "all" ? "true" : "false"}>
+              {pillar !== "all" && <PillarIcon pillar={pillar} />}
+              <span>{label}</span>
+            </button>
+          ))
+        }
+      </div>
+      <div class="find-sort">
+        <span>Sorted</span>
+        <button id="sortBtn" type="button">
+          <span id="sortLabel">Newest first</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+            <path d="M7 4v16M7 20l-3-3M7 4l3 3M14 7h7M14 12h5M14 17h3"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

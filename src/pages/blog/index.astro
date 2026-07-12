@@ -1,7 +1,10 @@
 ---
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../../keystatic.config";
-import PillarIcon from "../../components/PillarIcon.astro";
+import BlogEntryCard from "../../components/BlogEntryCard.astro";
+import BlogFindControls from "../../components/BlogFindControls.astro";
+import BlogFindSummary from "../../components/BlogFindSummary.astro";
+import BlogIndexHero from "../../components/BlogIndexHero.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import "../../styles/blog-index.css";
 
@@ -18,44 +21,6 @@ const entryNumbers = new Map(
     .sort((a, b) => (a.entry.publishedDate ?? "").localeCompare(b.entry.publishedDate ?? ""))
     .map((post, i) => [post.slug, i + 1])
 );
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const formatDate = (dateStr: string | null) => {
-  if (!dateStr) return "";
-  const [year, month, day] = dateStr.split("-").map(Number);
-  return `${months[month - 1]} ${day}, ${year}`;
-};
-
-const formatEntryDate = (dateStr: string | null) => {
-  if (!dateStr) return { monthDay: "", year: "" };
-  const [year, month, day] = dateStr.split("-").map(Number);
-  return {
-    monthDay: `${months[month - 1]} ${day}`,
-    year: String(year),
-  };
-};
-
-const pillarLabels: Record<string, string> = {
-  earns: "She Earns More",
-  builds: "She Builds More",
-  invests: "She Invests More",
-  lives: "She Lives More",
-  learns: "She Learns More",
-};
 ---
 
 <BaseLayout
@@ -63,46 +28,12 @@ const pillarLabels: Record<string, string> = {
   description="Real talk, field notes, and strategies for Canadian women ready to earn more."
   active="blog"
 >
-  <div class="diary-band">
-    <div class="wrap diary-meta">
-      <span>The SheisFEM Diary</span>
-      <span class="script">kept in real time, not in hindsight</span>
-      <span>Field Notes</span>
-    </div>
-  </div>
+  <BlogIndexHero />
+  <BlogFindControls />
 
-  <header class="wrap diary-cover">
-    <div class="diary-hero-grid">
-      <div class="diary-hero-copy">
-        <h1>
-          <span class="hero-line">Real talk for women</span>
-          <span class="hero-break"><em>earning</em> more.</span>
-          <span class="hand">— written from experience, not theory.</span>
-        </h1>
-        <p class="diary-sub">
-          Essays, field notes, and practical strategies on earning, building, investing, and living
-          with more agency.
-        </p>
-      </div>
-      <div class="diary-note">
-        <span class="note-label">
-          <span class="note-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M12 20h9"></path>
-              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path>
-            </svg>
-          </span>
-          <span class="script">from the desk</span>
-        </span>
-        <p>
-          Notes from the middle of the work: the questions, pivots, and receipts that rarely make
-          the polished version. <strong>Pull up a chair.</strong>
-        </p>
-      </div>
-    </div>
-  </header>
+  <main class="wrap diary-main">
+    <BlogFindSummary count={sorted.length} />
 
-  <main class="wrap entries">
     {
       sorted.length === 0 ? (
         <div class="bc-empty">
@@ -110,44 +41,39 @@ const pillarLabels: Record<string, string> = {
           <p>Field notes are on their way.</p>
         </div>
       ) : (
-        sorted.map(({ slug, entry }, i) => {
-          const date = formatEntryDate(entry.publishedDate);
-          return (
-            <a href={`/blog/${slug}`} class="entry">
-              {i === 0 && <span class="pin">Latest</span>}
-              <div class="date-rail">
-                <div class="d-script">{date.monthDay}</div>
-                <div class="d-year">{date.year}</div>
-                <div class="d-no">entry no. {String(entryNumbers.get(slug) ?? i + 1).padStart(2, "0")}</div>
-              </div>
-              <div class="entry-main">
-                <span class="e-filed">
-                  <PillarIcon pillar={entry.pillar} />
-                  {pillarLabels[entry.pillar] ?? entry.pillar}
-                </span>
-                <h2>{entry.title}</h2>
-                {entry.excerpt && <p class="e-excerpt">{entry.excerpt}</p>}
-                <div class="e-foot">
-                  {entry.publishedDate && <time datetime={entry.publishedDate}>{formatDate(entry.publishedDate)}</time>}
-                  <span class="read">Field note</span>
-                  <span class="open">
-                    Open entry
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      aria-hidden="true"
-                    >
-                      <path d="M5 12h14M13 6l6 6-6 6"></path>
-                    </svg>
-                  </span>
-                </div>
-              </div>
-            </a>
-          );
-        })
+        <>
+          <section class="entries" id="entryList" aria-live="polite">
+            {sorted.map(({ slug, entry }, i) => (
+              <BlogEntryCard
+                slug={slug}
+                entry={entry}
+                entryNumber={entryNumbers.get(slug) ?? i + 1}
+                isLatest={i === 0}
+              />
+            ))}
+          </section>
+
+          <div class="load-more" id="loadWrap" hidden>
+            <span class="lm-count" id="loadCount"></span>
+            <button id="loadBtn" type="button">
+              <span class="lm-label">Load more</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+                <path d="M12 5v14M19 12l-7 7-7-7"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="find-empty" id="emptyState">
+            <span class="fe-script">nothing filed under that...</span>
+            <p>No entries match your search. Try a different keyword or browse another pillar.</p>
+            <button id="emptyReset" type="button">Reset the diary</button>
+          </div>
+        </>
       )
     }
   </main>
+
+  <script>
+    import "../../scripts/blog-index";
+  </script>
 </BaseLayout>

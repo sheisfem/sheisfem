@@ -14,6 +14,7 @@ export default defineConfig({
         "src/test/**",
         "src/content.config.ts",
         "src/**/*.astro",
+        "src/scripts/**",
         "src/styles/**",
         "src/env.d.ts",
       ],

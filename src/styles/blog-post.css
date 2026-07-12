@@ -326,6 +326,25 @@
 }
 
 @media (max-width: 720px) {
+  .diary-band .diary-meta {
+    gap: 12px;
+    flex-wrap: nowrap;
+    font-size: 0.52rem;
+    letter-spacing: 0.14em;
+  }
+
+  .diary-meta span {
+    white-space: nowrap;
+  }
+
+  .diary-meta .script {
+    font-size: 0.95rem;
+  }
+
+  .diary-meta span:last-child {
+    display: none;
+  }
+
   .ph-dateline {
     font-size: 1.8rem;
   }
