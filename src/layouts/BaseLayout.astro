@@ -7,13 +7,20 @@ interface Props {
   title: string;
   description?: string;
   active?: "home" | "about" | "resources" | "blog";
+  type?: "website" | "article";
+  image?: string;
 }
 
 const {
   title,
   description = "Tools, resources, and real talk for Canadian women ready to take control of their financial lives.",
   active = "home",
+  type = "website",
+  image = "/assets/fem-logo.png",
 } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const imageUrl = new URL(image, Astro.site ?? Astro.url).href;
 ---
 
 <!doctype html>
@@ -22,9 +29,21 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/png" href="/assets/fem-logo.png" />
     <link rel="apple-touch-icon" href="/assets/fem-logo.png" />
+    <meta property="og:site_name" content="SheisFEM" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

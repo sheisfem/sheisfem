@@ -16,7 +16,11 @@ const resources = await getCollection("resources");
 const countLabel = (count: number) => `${count} ${count === 1 ? "resource" : "resources"}`;
 ---
 
-<BaseLayout title="Resources — SheisFEM" active="resources">
+<BaseLayout
+  title="Resources — SheisFEM"
+  description="Curated tools, books, podcasts, and publications for Canadian women building financial confidence, income, and long-term wealth."
+  active="resources"
+>
   <header class="res-cover wrap" data-screen-label="Resources — Cover">
     <FolioBar left="Tools & Resources" middle="The directory" right="Curated for Canada" />
     <div class="rc-inner">

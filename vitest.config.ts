@@ -14,6 +14,8 @@ export default defineConfig({
         "src/test/**",
         "src/content.config.ts",
         "src/**/*.astro",
+        "src/pages/robots.txt.ts",
+        "src/pages/sitemap.xml.ts",
         "src/scripts/**",
         "src/styles/**",
         "src/env.d.ts",
