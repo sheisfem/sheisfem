@@ -7,7 +7,11 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   site: "https://www.sheisfem.com",
   output: "static",
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
   integrations: [react(), keystatic()],
   vite: {
     resolve: {
