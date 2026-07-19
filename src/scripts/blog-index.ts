@@ -74,7 +74,8 @@ if (list) {
     const query = state.query.trim().toLowerCase();
     return entries
       .filter((entry) => {
-        const matchesPillar = state.pillar === "all" || entry.dataset.pillar === state.pillar;
+        const pillars = (entry.dataset.pillars ?? "").split(" ");
+        const matchesPillar = state.pillar === "all" || pillars.includes(state.pillar);
         const matchesQuery = !query || (entry.dataset.search ?? "").includes(query);
         return matchesPillar && matchesQuery;
       })
@@ -173,7 +174,8 @@ if (list) {
     if (!button) {
       return;
     }
-    state.pillar = (button.dataset.pillar as FilterPillar | undefined) ?? "all";
+    const nextPillar = (button.dataset.pillar as FilterPillar | undefined) ?? "all";
+    state.pillar = nextPillar !== "all" && state.pillar === nextPillar ? "all" : nextPillar;
     apply();
   });
   controls.sortBtn?.addEventListener("click", () => {

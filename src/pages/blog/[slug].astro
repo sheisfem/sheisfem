@@ -30,6 +30,7 @@ const pillarLabels: Record<string, string> = {
   lives: "She Lives More",
   learns: "She Learns More",
 };
+const postPillarLabels = post.pillars.map((pillar) => pillarLabels[pillar] ?? pillar);
 
 const renderableTree = Markdoc.transform(post.content.node);
 const html = enhancePostHtml(Markdoc.renderers.html(renderableTree));
@@ -76,9 +77,13 @@ const readMinutes = getReadMinutes(html);
         <hr class="ph-rule" />
         <h1>{post.title}</h1>
         <div class="ph-meta">
-          <span class="filed">
-            <PillarIcon pillar={post.pillar} />
-            {pillarLabels[post.pillar] ?? post.pillar}
+          <span class="filed-list" aria-label={`Filed under ${postPillarLabels.join(", ")}`}>
+            {post.pillars.map((pillar) => (
+              <span class="filed">
+                <PillarIcon pillar={pillar} />
+                {pillarLabels[pillar] ?? pillar}
+              </span>
+            ))}
           </span>
           <span class="dot"></span>
           <span>{readMinutes} min read</span>
