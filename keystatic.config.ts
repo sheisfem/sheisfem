@@ -13,8 +13,8 @@ export default config({
       format: { contentField: "content" },
       schema: {
         title: fields.slug({ name: { label: "Title" } }),
-        pillar: fields.select({
-          label: "Pillar",
+        pillars: fields.multiselect({
+          label: "Pillars",
           options: [
             { label: "She Earns More", value: "earns" },
             { label: "She Builds More", value: "builds" },
@@ -22,7 +22,7 @@ export default config({
             { label: "She Lives More", value: "lives" },
             { label: "She Learns More", value: "learns" },
           ],
-          defaultValue: "earns",
+          defaultValue: ["earns"],
         }),
         publishedDate: fields.date({ label: "Published Date" }),
         excerpt: fields.text({ label: "Excerpt", multiline: true }),

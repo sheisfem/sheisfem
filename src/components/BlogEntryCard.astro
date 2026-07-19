@@ -6,7 +6,7 @@ interface Props {
   slug: string;
   entry: {
     title: string;
-    pillar: Pillar;
+    pillars: readonly Pillar[];
     publishedDate: string | null;
     excerpt?: string;
   };
@@ -16,18 +16,19 @@ interface Props {
 
 const { slug, entry, entryNumber, isLatest = false } = Astro.props;
 const date = formatEntryDate(entry.publishedDate);
-const pillarLabel = pillarLabels[entry.pillar];
+const entryPillars = entry.pillars;
+const pillarLabelList = entryPillars.map((pillar) => pillarLabels[pillar] ?? pillar);
 ---
 
 <a
   href={`/blog/${slug}`}
   class="entry"
   data-entry
-  data-pillar={entry.pillar}
+  data-pillars={entryPillars.join(" ")}
   data-date={entry.publishedDate}
   data-title={entry.title}
   data-excerpt={entry.excerpt ?? ""}
-  data-search={`${entry.title} ${entry.excerpt ?? ""} ${pillarLabel}`.toLowerCase()}
+  data-search={`${entry.title} ${entry.excerpt ?? ""} ${pillarLabelList.join(" ")}`.toLowerCase()}
 >
   {isLatest && <span class="pin" data-pin>Latest</span>}
   <div class="date-rail">
@@ -36,10 +37,14 @@ const pillarLabel = pillarLabels[entry.pillar];
     <div class="d-no">entry no. {String(entryNumber).padStart(2, "0")}</div>
   </div>
   <div class="entry-main">
-    <span class="e-filed">
-      <PillarIcon pillar={entry.pillar} />
-      {pillarLabel}
-    </span>
+    <div class="e-filed-list" aria-label={`Filed under ${pillarLabelList.join(", ")}`}>
+      {entryPillars.map((pillar) => (
+        <span class="e-filed">
+          <PillarIcon pillar={pillar} />
+          {pillarLabels[pillar] ?? pillar}
+        </span>
+      ))}
+    </div>
     <h2 data-title-target>{entry.title}</h2>
     {entry.excerpt && <p class="e-excerpt" data-excerpt-target>{entry.excerpt}</p>}
     <div class="e-foot">

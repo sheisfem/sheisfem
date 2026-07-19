@@ -264,6 +264,13 @@
   color: var(--orange);
 }
 
+.diary-post .dp-filed-list {
+  display: flex;
+  align-items: center;
+  gap: 8px 14px;
+  flex-wrap: wrap;
+}
+
 .diary-post .dp-filed {
   display: inline-flex;
   align-items: center;

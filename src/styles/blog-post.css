@@ -124,6 +124,13 @@
   text-transform: uppercase;
 }
 
+.ph-meta .filed-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .ph-meta .filed {
   display: inline-flex;
   align-items: center;

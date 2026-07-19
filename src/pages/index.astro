@@ -117,9 +117,13 @@ const pillarLabels: Record<string, string> = {
             {
               recentPosts.map(({ slug, entry }) => (
                 <a class="diary-post" href={`/blog/${slug}`}>
-                  <span class="dp-filed">
-                    <PillarIcon pillar={entry.pillar} />
-                    {pillarLabels[entry.pillar] ?? entry.pillar}
+                  <span class="dp-filed-list" aria-label={`Filed under ${entry.pillars.map((pillar) => pillarLabels[pillar] ?? pillar).join(", ")}`}>
+                    {entry.pillars.map((pillar) => (
+                      <span class="dp-filed">
+                        <PillarIcon pillar={pillar} />
+                        {pillarLabels[pillar] ?? pillar}
+                      </span>
+                    ))}
                   </span>
                   <h3>{entry.title}</h3>
                   {entry.excerpt && <p>{entry.excerpt}</p>}
