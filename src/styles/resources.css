@@ -289,11 +289,19 @@
 
 @media (max-width: 600px) {
   .tabs {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .tab,
   .tab:first-child {
+    padding: 13px 6px;
+    border-right: 1px solid var(--line);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .tab:last-child {
     border-right: none;
   }
 
