@@ -1,0 +1,149 @@
+---
+import Masthead from "../components/Masthead.astro";
+import "../styles/global.css";
+import "../styles/harada-method.css";
+
+const title = "Free Harada Method Worksheet — One Goal, Eight Spokes | SheisFEM";
+const description =
+  "Build your Harada wheel with a free one-goal, eight-spokes planning worksheet, delivered straight to your inbox.";
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const imageUrl = new URL("/assets/fem-logo.png", Astro.site ?? Astro.url).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="p:domain_verify" content="34dcd05c9209fdc7d3074ae2351b0b1a" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/png" href="/assets/fem-logo.png" />
+    <link rel="apple-touch-icon" href="/assets/fem-logo.png" />
+    <meta property="og:site_name" content="SheisFEM" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500;600&family=Caveat:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="harada-page">
+    <Masthead active="harada-method" />
+    <main class="harada-main">
+      <section class="harada-hero" aria-labelledby="harada-title">
+        <div class="harada-copy">
+          <p class="harada-kicker">Free goal-planning worksheet</p>
+          <h1 id="harada-title">
+            One goal.<br />Eight spokes.<br /><em>A plan you can follow.</em>
+          </h1>
+          <p class="harada-lede">
+            Turn the life you keep picturing into one clear goal and the eight areas that will
+            help you reach it. This free Harada Method worksheet gives you a simple place to map
+            it all out.
+          </p>
+
+          <ul class="harada-benefits" aria-label="What the worksheet helps you do">
+            <li>Name the goal at the center of your wheel</li>
+            <li>Choose the eight supporting areas that matter to you</li>
+            <li>Turn each spoke into small, repeatable actions</li>
+          </ul>
+        </div>
+
+        <div class="harada-offer">
+          <div class="harada-wheel" aria-hidden="true">
+            <div class="harada-wheel-ring"></div>
+            <div class="harada-wheel-lines"></div>
+            <span class="harada-wheel-center">your<br />goal</span>
+          </div>
+
+          <div class="harada-form-card">
+            <p class="harada-form-kicker">Start with the worksheet</p>
+            <h2>Build your <span>Harada wheel</span></h2>
+            <p class="harada-form-copy">
+              Enter your email and you'll get the free one-goal, eight-spokes worksheet straight
+              to your inbox.
+            </p>
+
+            <script
+              async
+              data-uid="c38f19a71f"
+              src="https://sheisfem-com.kit.com/c38f19a71f/index.js?v=20260803"
+            ></script>
+            <p class="harada-privacy">Free download. No spam. Unsubscribe anytime.</p>
+            <a class="harada-success-home" href="/" hidden>Explore SheisFEM →</a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="harada-footer">
+        <span>She Learns More</span>
+        <span aria-hidden="true">•</span>
+        <span>sheisfem.com</span>
+      </footer>
+    </main>
+
+    <script>
+      const burger = document.getElementById("navBurger");
+      const links = document.getElementById("navLinks");
+
+      burger?.addEventListener("click", () => {
+        links?.classList.toggle("open");
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!links?.classList.contains("open")) return;
+        if (!(event.target instanceof Node)) return;
+        if (!links.contains(event.target) && !burger?.contains(event.target)) {
+          links.classList.remove("open");
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") links?.classList.remove("open");
+      });
+
+      links?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => links.classList.remove("open"));
+      });
+
+      const successHome = document.querySelector(".harada-success-home");
+      const formCard = document.querySelector(".harada-form-card");
+
+      const revealHomeLinkAfterSignup = () => {
+        const successMessage = formCard?.querySelector(
+          '.formkit-alert-success, [data-element="success"]'
+        );
+
+        if (
+          successHome instanceof HTMLElement &&
+          successMessage instanceof HTMLElement &&
+          !successMessage.hidden &&
+          getComputedStyle(successMessage).display !== "none"
+        ) {
+          successHome.hidden = false;
+        }
+      };
+
+      if (formCard) {
+        new MutationObserver(revealHomeLinkAfterSignup).observe(formCard, {
+          attributes: true,
+          childList: true,
+          subtree: true,
+        });
+      }
+    </script>
+  </body>
+</html>

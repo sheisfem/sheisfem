@@ -1,0 +1,392 @@
+/* biome-ignore-all lint/complexity/noImportantStyles: Kit injects its stylesheet after the page CSS, so embed overrides require important declarations. */
+.harada-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    linear-gradient(rgba(255, 189, 89, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 189, 89, 0.08) 1px, transparent 1px), var(--cream);
+  background-size: 28px 28px;
+}
+
+.harada-main {
+  width: min(1180px, calc(100% - 96px));
+  min-height: calc(100vh - 72px);
+  margin: 0 auto;
+  padding: 22px 0;
+}
+
+.harada-hero {
+  display: grid;
+  align-items: center;
+  min-height: calc(100vh - 138px);
+  padding: 48px 0;
+  grid-template-columns: minmax(0, 1.08fr) minmax(380px, 0.92fr);
+  gap: clamp(52px, 7vw, 92px);
+}
+
+.harada-copy {
+  max-width: 650px;
+}
+
+.harada-kicker,
+.harada-form-kicker {
+  margin: 0 0 18px;
+  color: #7e3f10;
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.29em;
+  text-transform: uppercase;
+}
+
+.harada-copy h1 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3.5rem, 7vw, 6.25rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
+}
+
+.harada-copy h1 em {
+  color: var(--orange);
+  font-size: 0.84em;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.harada-lede {
+  max-width: 55ch;
+  margin: 30px 0 0;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.harada-benefits {
+  display: grid;
+  margin: 30px 0 0;
+  padding: 0;
+  gap: 13px;
+  list-style: none;
+}
+
+.harada-benefits li {
+  position: relative;
+  padding-left: 31px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.harada-benefits li::before {
+  position: absolute;
+  top: 0.17em;
+  left: 0;
+  display: grid;
+  width: 19px;
+  height: 19px;
+  border: 1.5px solid var(--ink);
+  background: var(--peach);
+  content: "✓";
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1;
+  place-items: center;
+}
+
+.harada-offer {
+  position: relative;
+  padding-top: 74px;
+}
+
+.harada-wheel {
+  position: absolute;
+  top: -13px;
+  right: -25px;
+  z-index: 3;
+  width: 170px;
+  height: 170px;
+  color: var(--orange);
+  pointer-events: none;
+  transform: rotate(8deg);
+}
+
+.harada-wheel-ring,
+.harada-wheel-lines {
+  position: absolute;
+  inset: 0;
+  border: 2px solid currentcolor;
+  border-radius: 50%;
+}
+
+.harada-wheel-lines {
+  border: none;
+  background:
+    linear-gradient(
+      90deg,
+      transparent calc(50% - 1px),
+      currentcolor 50%,
+      transparent calc(50% + 1px)
+    ),
+    linear-gradient(
+      0deg,
+      transparent calc(50% - 1px),
+      currentcolor 50%,
+      transparent calc(50% + 1px)
+    ),
+    linear-gradient(
+      45deg,
+      transparent calc(50% - 1px),
+      currentcolor 50%,
+      transparent calc(50% + 1px)
+    ),
+    linear-gradient(
+      -45deg,
+      transparent calc(50% - 1px),
+      currentcolor 50%,
+      transparent calc(50% + 1px)
+    );
+  clip-path: circle(50%);
+}
+
+.harada-wheel-center {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 1;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--peach);
+  color: var(--ink);
+  font-family: "Caveat", cursive;
+  font-size: 1rem;
+  line-height: 0.8;
+  place-items: center;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.harada-form-card {
+  position: relative;
+  z-index: 2;
+  padding: clamp(34px, 5vw, 54px);
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 14px 14px 0 var(--peach);
+}
+
+.harada-form-card h2 {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+}
+
+.harada-form-card h2 span {
+  display: block;
+  margin-top: 0.14em;
+  text-decoration-line: underline;
+  text-decoration-color: var(--peach);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+}
+
+.harada-form-copy {
+  margin: 16px 0 24px;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.harada-form-card .formkit-form {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.harada-form-card .formkit-header,
+.harada-form-card .formkit-subheader,
+.harada-form-card .formkit-guarantee,
+.harada-form-card .formkit-powered-by-convertkit-container {
+  display: none !important;
+}
+
+.harada-form-card .formkit-fields {
+  display: grid !important;
+  gap: 10px !important;
+}
+
+.harada-form-card .formkit-field,
+.harada-form-card .formkit-submit {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.harada-form-card .formkit-input {
+  width: 100% !important;
+  min-height: 54px !important;
+  padding: 14px 16px !important;
+  border: 1.5px solid var(--ink) !important;
+  border-radius: 0 !important;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  font-family: "Jost", sans-serif !important;
+  font-size: 1rem !important;
+}
+
+.harada-form-card .formkit-input:focus {
+  border-color: var(--orange) !important;
+  outline: 2px solid rgba(255, 145, 77, 0.25) !important;
+}
+
+.harada-form-card .formkit-submit {
+  min-height: 54px !important;
+  padding: 15px 20px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--ink) !important;
+  color: var(--cream) !important;
+  font-family: "Jost", sans-serif !important;
+  font-size: 0.74rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+.harada-form-card .formkit-submit:hover {
+  background: var(--orange) !important;
+}
+
+.harada-form-card .formkit-submit:hover > span,
+.harada-form-card .formkit-submit:focus > span {
+  background: transparent !important;
+}
+
+.harada-privacy {
+  margin: 13px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.69rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+.harada-success-home {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px 18px;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.harada-success-home:not([hidden]) {
+  display: block;
+}
+
+.harada-success-home:hover {
+  background: var(--peach);
+}
+
+.harada-footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  color: var(--ink-soft);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .harada-main {
+    width: min(100% - 64px, 660px);
+  }
+
+  .harada-hero {
+    min-height: 0;
+    padding: 54px 0 68px;
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .harada-copy h1 {
+    font-size: clamp(3.45rem, 13vw, 5.3rem);
+  }
+
+  .harada-offer {
+    padding-top: 58px;
+  }
+
+  .harada-wheel {
+    right: -5px;
+    width: 145px;
+    height: 145px;
+  }
+}
+
+@media (max-width: 520px) {
+  .harada-main {
+    width: min(100% - 48px, 480px);
+    padding-top: 20px;
+  }
+
+  .harada-hero {
+    padding-top: 42px;
+    gap: 32px;
+  }
+
+  .harada-copy h1 {
+    font-size: clamp(3.1rem, 15vw, 4.2rem);
+    line-height: 0.86;
+  }
+
+  .harada-copy h1 em {
+    white-space: normal;
+  }
+
+  .harada-lede {
+    margin-top: 24px;
+    font-size: 0.96rem;
+  }
+
+  .harada-benefits {
+    margin-top: 25px;
+  }
+
+  .harada-offer {
+    padding: 0 5px 10px 0;
+  }
+
+  .harada-wheel {
+    display: none;
+  }
+
+  .harada-form-card {
+    padding: 32px 23px;
+    box-shadow: 9px 9px 0 var(--peach);
+  }
+
+  .harada-footer {
+    align-items: center;
+    flex-direction: column;
+    gap: 3px;
+    text-align: center;
+  }
+
+  .harada-footer span[aria-hidden="true"] {
+    display: none;
+  }
+}
