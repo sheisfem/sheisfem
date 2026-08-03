@@ -93,6 +93,49 @@
   place-items: center;
 }
 
+.harada-preview {
+  width: min(420px, 88%);
+  margin: 34px 0 0;
+}
+
+.harada-preview-frame {
+  position: relative;
+  padding: 8px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 9px 9px 0 var(--peach);
+  transform: rotate(-1.2deg);
+}
+
+.harada-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(23, 20, 17, 0.12);
+}
+
+.harada-preview-badge {
+  position: absolute;
+  right: -18px;
+  bottom: 18px;
+  padding: 8px 11px;
+  border: 1.5px solid var(--ink);
+  background: var(--orange);
+  color: var(--ink);
+  font-size: 0.61rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(2deg);
+}
+
+.harada-preview figcaption {
+  margin: 17px 0 0 7px;
+  color: var(--ink-soft);
+  font-family: "Caveat", cursive;
+  font-size: 1.14rem;
+}
+
 .harada-offer {
   position: relative;
   padding-top: 74px;
@@ -110,6 +153,34 @@
   transform: rotate(8deg);
 }
 
+.harada-wheel::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 26deg,
+    rgba(255, 189, 89, 0.04) 30deg,
+    rgba(255, 189, 89, 0.14) 35deg,
+    rgba(255, 145, 77, 0.34) 40deg,
+    rgba(255, 145, 77, 0.72) 44deg,
+    transparent 45deg
+  );
+  content: "";
+  filter: blur(4px);
+  mask-image: radial-gradient(circle, transparent 0 28%, #000 39% 84%, transparent 97%);
+  opacity: 0.95;
+  transform: scale(0.98);
+  -webkit-mask-image: radial-gradient(
+    circle,
+    transparent 0 28%,
+    #000 39% 84%,
+    transparent 97%
+  );
+}
+
 .harada-wheel-ring,
 .harada-wheel-lines {
   position: absolute;
@@ -119,6 +190,7 @@
 }
 
 .harada-wheel-lines {
+  z-index: 1;
   border: none;
   background:
     linear-gradient(
@@ -146,6 +218,10 @@
       transparent calc(50% + 1px)
     );
   clip-path: circle(50%);
+}
+
+.harada-wheel-ring {
+  z-index: 1;
 }
 
 .harada-wheel-center {
@@ -360,6 +436,17 @@
   .harada-lede {
     margin-top: 24px;
     font-size: 0.96rem;
+  }
+
+  .harada-preview {
+    width: calc(100% - 8px);
+    margin-top: 30px;
+  }
+
+  .harada-preview-badge {
+    right: -10px;
+    bottom: 12px;
+    font-size: 0.55rem;
   }
 
   .harada-benefits {

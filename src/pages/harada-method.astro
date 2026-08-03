@@ -7,7 +7,7 @@ const title = "Free Harada Method Worksheet — One Goal, Eight Spokes | SheisFE
 const description =
   "Build your Harada wheel with a free one-goal, eight-spokes planning worksheet, delivered straight to your inbox.";
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
-const imageUrl = new URL("/assets/fem-logo.png", Astro.site ?? Astro.url).href;
+const imageUrl = new URL("/assets/harada-wheel-preview.png", Astro.site ?? Astro.url).href;
 ---
 
 <!doctype html>
@@ -51,7 +51,7 @@ const imageUrl = new URL("/assets/fem-logo.png", Astro.site ?? Astro.url).href;
           </h1>
           <p class="harada-lede">
             Turn the life you keep picturing into one clear goal and the eight areas that will
-            help you reach it. This free Harada Method worksheet gives you a simple place to map
+            help you reach it. This free worksheet inspired by the Harada Method gives you a simple place to map
             it all out.
           </p>
 
@@ -60,6 +60,21 @@ const imageUrl = new URL("/assets/fem-logo.png", Astro.site ?? Astro.url).href;
             <li>Choose the eight supporting areas that matter to you</li>
             <li>Turn each spoke into small, repeatable actions</li>
           </ul>
+
+          <figure class="harada-preview">
+            <div class="harada-preview-frame">
+              <img
+                src="/assets/harada-wheel-preview.png"
+                alt="Inside the worksheet: an eight-spoke Harada wheel surrounding one central goal"
+                width="1200"
+                height="898"
+                loading="eager"
+                fetchpriority="high"
+              />
+              <span class="harada-preview-badge">4-page printable PDF</span>
+            </div>
+            <figcaption>A peek at what’s waiting in your inbox.</figcaption>
+          </figure>
         </div>
 
         <div class="harada-offer">
@@ -71,10 +86,10 @@ const imageUrl = new URL("/assets/fem-logo.png", Astro.site ?? Astro.url).href;
 
           <div class="harada-form-card">
             <p class="harada-form-kicker">Start with the worksheet</p>
-            <h2>Build your <span>Harada wheel</span></h2>
+            <h2>Build Your <span>SheisFEM Goal Wheel</span></h2>
             <p class="harada-form-copy">
-              Enter your email and you'll get the free one-goal, eight-spokes worksheet straight
-              to your inbox.
+              Set your goal in motion—one spoke, one action, one step at a time. Enter your email
+              and you'll get the free worksheet straight to your inbox.
             </p>
 
             <script
