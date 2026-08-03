@@ -4,7 +4,7 @@ import keystaticConfig from "../../keystatic.config";
 declare const process: { cwd(): string };
 
 const site = "https://www.sheisfem.com";
-const staticPages = ["", "about", "resources", "blog"];
+const staticPages = ["", "about", "resources", "blog", "harada-method"];
 
 type SitemapEntry = {
   loc: string;
