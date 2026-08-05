@@ -112,6 +112,7 @@ const imageUrl = new URL("/assets/harada-wheel-preview.png", Astro.site ?? Astro
             <a
               class="harada-success-home"
               href="/blog/the-harada-method-one-goal-eight-spokes-a-whole-life?ref=subscribed"
+              data-harada-success-cta
               hidden>Read the full story behind the method →</a
             >
           </div>
@@ -126,6 +127,8 @@ const imageUrl = new URL("/assets/harada-wheel-preview.png", Astro.site ?? Astro
     </main>
 
     <script>
+      import { getHaradaSuccessCta } from "../lib/haradaReferral";
+
       const burger = document.getElementById("navBurger");
       const links = document.getElementById("navLinks");
 
@@ -150,7 +153,14 @@ const imageUrl = new URL("/assets/harada-wheel-preview.png", Astro.site ?? Astro
       });
 
       const signupForm = document.querySelector("[data-harada-signup-form]");
-      const successHome = document.querySelector(".harada-success-home");
+      const successCta = document.querySelector("[data-harada-success-cta]");
+      const referral = new URLSearchParams(window.location.search).get("ref");
+      const followUpCta = getHaradaSuccessCta(referral);
+
+      if (successCta instanceof HTMLAnchorElement) {
+        successCta.href = followUpCta.href;
+        successCta.textContent = followUpCta.label;
+      }
 
       const setSignupStatus = (message: string, state: string) => {
         const status = signupForm?.querySelector("[data-harada-status]");
@@ -191,7 +201,7 @@ const imageUrl = new URL("/assets/harada-wheel-preview.png", Astro.site ?? Astro
           signupForm.querySelector(".harada-email-input")?.setAttribute("hidden", "");
           submitButton?.setAttribute("hidden", "");
           setSignupStatus("You're almost there—check your inbox to confirm and download your worksheet.", "success");
-          if (successHome instanceof HTMLElement) successHome.hidden = false;
+          if (successCta instanceof HTMLElement) successCta.hidden = false;
         } catch (error) {
           setSignupStatus(
             error instanceof Error ? error.message : "Something went wrong. Please try again.",

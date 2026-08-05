@@ -34,7 +34,7 @@ describe("Given blog post helpers", () => {
       expect(enhanced).toContain("data-harada-worksheet-cta");
       expect(enhanced).toContain("Haven't grabbed the worksheet yet?");
       expect(enhanced).toContain(
-        '<a class="post-cta-button" href="/harada-method" data-harada-cta-default>'
+        '<a class="post-cta-button" href="/harada-method?ref=blogpost" data-harada-cta-default>'
       );
       expect(enhanced).toContain("Your Harada-inspired goal wheel is waiting in your inbox.");
       expect(enhanced).toContain("data-harada-cta-subscribed hidden");
