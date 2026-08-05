@@ -3,7 +3,7 @@ import Masthead from "../components/Masthead.astro";
 import "../styles/global.css";
 import "../styles/harada-method.css";
 
-const title = "Free Harada Method Worksheet — One Goal, Eight Spokes | SheisFEM";
+const title = "Free Harada Inspired Worksheet — One Goal, Eight Spokes | SheisFEM";
 const description =
   "Build your Harada wheel with a free one-goal, eight-spokes planning worksheet, delivered straight to your inbox.";
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
@@ -92,11 +92,22 @@ const imageUrl = new URL("/assets/harada-wheel-preview.png", Astro.site ?? Astro
               and you'll get the free worksheet straight to your inbox.
             </p>
 
-            <script
-              async
-              data-uid="c38f19a71f"
-              src="https://sheisfem-com.kit.com/c38f19a71f/index.js?v=20260803"
-            ></script>
+            <form class="harada-native-form" data-harada-signup-form>
+              <label class="harada-email-label" for="harada-email">Email address</label>
+              <input
+                id="harada-email"
+                class="harada-email-input"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                placeholder="your@email.com"
+              />
+              <button class="harada-submit" type="submit">
+                <span data-harada-button-text>Get the worksheet</span>
+              </button>
+              <p class="harada-form-status" aria-live="polite" data-harada-status></p>
+            </form>
             <p class="harada-privacy">Free download. No spam. Unsubscribe anytime.</p>
             <a class="harada-success-home" href="/" hidden>Explore SheisFEM →</a>
           </div>
@@ -134,31 +145,59 @@ const imageUrl = new URL("/assets/harada-wheel-preview.png", Astro.site ?? Astro
         link.addEventListener("click", () => links.classList.remove("open"));
       });
 
+      const signupForm = document.querySelector("[data-harada-signup-form]");
       const successHome = document.querySelector(".harada-success-home");
-      const formCard = document.querySelector(".harada-form-card");
 
-      const revealHomeLinkAfterSignup = () => {
-        const successMessage = formCard?.querySelector(
-          '.formkit-alert-success, [data-element="success"]'
-        );
+      const setSignupStatus = (message: string, state: string) => {
+        const status = signupForm?.querySelector("[data-harada-status]");
+        if (!(status instanceof HTMLElement)) return;
 
-        if (
-          successHome instanceof HTMLElement &&
-          successMessage instanceof HTMLElement &&
-          !successMessage.hidden &&
-          getComputedStyle(successMessage).display !== "none"
-        ) {
-          successHome.hidden = false;
-        }
+        status.textContent = message;
+        status.dataset.state = state;
       };
 
-      if (formCard) {
-        new MutationObserver(revealHomeLinkAfterSignup).observe(formCard, {
-          attributes: true,
-          childList: true,
-          subtree: true,
-        });
-      }
+      signupForm?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!(signupForm instanceof HTMLFormElement) || !signupForm.reportValidity()) return;
+
+        const submitButton = signupForm.querySelector('button[type="submit"]');
+        const buttonText = signupForm.querySelector("[data-harada-button-text]");
+        const email = new FormData(signupForm).get("email");
+
+        if (email instanceof File) return;
+
+        submitButton?.setAttribute("disabled", "");
+        if (buttonText) buttonText.textContent = "Sending...";
+        setSignupStatus("Sending your worksheet...", "loading");
+
+        try {
+          const response = await fetch("/api/harada-signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          });
+          const data = await response.json().catch(() => ({}));
+
+          if (!response.ok || data.ok !== true) {
+            throw new Error(data.error || "Something went wrong. Please try again.");
+          }
+
+          signupForm.querySelector(".harada-email-label")?.setAttribute("hidden", "");
+          signupForm.querySelector(".harada-email-input")?.setAttribute("hidden", "");
+          submitButton?.setAttribute("hidden", "");
+          setSignupStatus("You're almost there—check your inbox to confirm and download your worksheet.", "success");
+          if (successHome instanceof HTMLElement) successHome.hidden = false;
+        } catch (error) {
+          setSignupStatus(
+            error instanceof Error ? error.message : "Something went wrong. Please try again.",
+            "error"
+          );
+        } finally {
+          submitButton?.removeAttribute("disabled");
+          if (buttonText) buttonText.textContent = "Get the worksheet";
+        }
+      });
     </script>
   </body>
 </html>
