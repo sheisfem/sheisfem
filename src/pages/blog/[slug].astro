@@ -124,4 +124,17 @@ const readMinutes = getReadMinutes(html);
       </a>
     </div>
   </main>
+
+  <script>
+    if (new URLSearchParams(window.location.search).get("ref") === "subscribed") {
+      document.querySelectorAll("[data-harada-worksheet-cta]").forEach((cta) => {
+        cta.querySelectorAll<HTMLElement>("[data-harada-cta-default]").forEach((element) => {
+          element.hidden = true;
+        });
+        cta.querySelectorAll<HTMLElement>("[data-harada-cta-subscribed]").forEach((element) => {
+          element.hidden = false;
+        });
+      });
+    }
+  </script>
 </BaseLayout>

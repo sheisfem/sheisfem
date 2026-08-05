@@ -124,6 +124,113 @@
   font-weight: 700;
 }
 
+.post-page .post-body .post-cta {
+  display: grid;
+  position: relative;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 30px;
+  margin: 48px 0;
+  padding: 32px 34px;
+  overflow: hidden;
+  border: 1.5px solid var(--ink);
+  background: var(--peach-wash);
+  box-shadow: 10px 12px 0 rgba(255, 145, 77, 0.2);
+}
+
+.post-page .post-body .post-cta::after {
+  position: absolute;
+  top: -44px;
+  right: -44px;
+  width: 112px;
+  height: 112px;
+  border: 18px double rgba(255, 145, 77, 0.2);
+  border-radius: 50%;
+  content: "";
+}
+
+.post-page .post-body .post-cta-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.post-page .post-body .post-cta-subscribed {
+  grid-column: 1 / -1;
+  padding-right: 60px;
+}
+
+.post-page .post-body .post-cta-kicker {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--orange);
+  font-family: "Caveat", cursive;
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1;
+  transform: rotate(-1deg);
+  transform-origin: left;
+}
+
+.post-page .post-body .post-cta h3 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.55rem, 3vw, 1.95rem);
+  font-weight: 650;
+  line-height: 1.05;
+}
+
+.post-page .post-body .post-cta p {
+  max-width: 520px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.post-page .post-body a.post-cta-button {
+  display: inline-flex;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 184px;
+  padding: 15px 18px;
+  border: 1.5px solid var(--ink);
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.post-page .post-body a.post-cta-button:hover,
+.post-page .post-body a.post-cta-button:focus-visible {
+  background: var(--orange);
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 620px) {
+  .post-page .post-body .post-cta {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 28px 24px;
+  }
+
+  .post-page .post-body a.post-cta-button {
+    width: 100%;
+  }
+}
+
 .post-page .post-body .signoff {
   margin: 54px 0 0;
   padding: 34px 0 0;

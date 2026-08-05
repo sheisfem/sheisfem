@@ -51,6 +51,22 @@ export const enhancePostHtml = (rawHtml: string) => {
   return rawHtml
     .replace(/==([\s\S]*?)==/g, '<span class="annot">$1</span>')
     .replace(/<p>\[\[note:\s*([\s\S]*?)\]\]<\/p>/g, '<p class="margin-note">$1</p>')
+    .replace(
+      /<p>\[\[harada-worksheet-cta\]\]<\/p>/g,
+      `<aside class="post-cta" aria-label="Harada-inspired worksheet" data-harada-worksheet-cta>
+        <div class="post-cta-copy" data-harada-cta-default>
+          <span class="post-cta-kicker">Free 4-page worksheet</span>
+          <h3>Haven't grabbed the worksheet yet?</h3>
+          <p>Use the free 4-page Harada Method worksheet to turn one meaningful goal into eight supporting spokes.</p>
+        </div>
+        <a class="post-cta-button" href="/harada-method" data-harada-cta-default>Get the worksheet <span aria-hidden="true">→</span></a>
+        <div class="post-cta-copy post-cta-subscribed" data-harada-cta-subscribed hidden>
+          <span class="post-cta-kicker">Worksheet on its way</span>
+          <h3>Your Harada-inspired goal wheel is waiting in your inbox.</h3>
+          <p>Open the 4-page worksheet when you're ready to turn the goal you just named into eight supporting spokes.</p>
+        </div>
+      </aside>`
+    )
     .replace(fieldNotePattern, (match) => {
       const items = [
         ...match.matchAll(/<p><strong>\d+\.\s*([\s\S]*?)<\/strong>\s*([\s\S]*?)<\/p>/g),

@@ -28,6 +28,18 @@ describe("Given blog post helpers", () => {
       );
     });
 
+    it("Then converts the Harada worksheet marker into a prominent lead magnet", () => {
+      const enhanced = enhancePostHtml("<p>[[harada-worksheet-cta]]</p>");
+
+      expect(enhanced).toContain("data-harada-worksheet-cta");
+      expect(enhanced).toContain("Haven't grabbed the worksheet yet?");
+      expect(enhanced).toContain(
+        '<a class="post-cta-button" href="/harada-method" data-harada-cta-default>'
+      );
+      expect(enhanced).toContain("Your Harada-inspired goal wheel is waiting in your inbox.");
+      expect(enhanced).toContain("data-harada-cta-subscribed hidden");
+    });
+
     it("Then converts consecutive numbered bold paragraphs into field notes", () => {
       const html = [
         "<p><strong>1. Name the result.</strong> Attach a metric.</p>",
