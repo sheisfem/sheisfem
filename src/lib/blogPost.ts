@@ -57,7 +57,7 @@ export const enhancePostHtml = (rawHtml: string) => {
         <div class="post-cta-copy" data-harada-cta-default>
           <span class="post-cta-kicker">Free 4-page worksheet</span>
           <h3>Haven't grabbed the worksheet yet?</h3>
-          <p>Use the free 4-page Harada Method worksheet to turn one meaningful goal into eight supporting spokes.</p>
+          <p>Use the free 4-page Harada-inspired worksheet to turn one meaningful goal into eight supporting spokes.</p>
         </div>
         <a class="post-cta-button" href="/harada-method" data-harada-cta-default>Get the worksheet <span aria-hidden="true">→</span></a>
         <div class="post-cta-copy post-cta-subscribed" data-harada-cta-subscribed hidden>
