@@ -59,19 +59,17 @@ const imageUrl = new URL(image, Astro.site ?? Astro.url).href;
     <Footer />
     <script is:inline>
       (() => {
-        const getIsoIssueWeek = (date) => {
+        const getCalendarIssueWeek = (date) => {
           const target = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-          const day = target.getUTCDay() || 7;
-          target.setUTCDate(target.getUTCDate() + 4 - day);
           const yearStart = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
           return {
             week: Math.ceil(((target - yearStart) / 86400000 + 1) / 7),
-            year: target.getUTCFullYear(),
+            year: date.getFullYear(),
           };
         };
 
         document.querySelectorAll("[data-current-issue-week]").forEach((element) => {
-          const issueWeek = getIsoIssueWeek(new Date());
+          const issueWeek = getCalendarIssueWeek(new Date());
           element.textContent = `Issue No.${String(issueWeek.week).padStart(2, "0")} · ${issueWeek.year}`;
         });
 

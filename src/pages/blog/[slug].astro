@@ -6,6 +6,7 @@ import CommentsSection from "../../components/CommentsSection";
 import PillarIcon from "../../components/PillarIcon.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { enhancePostHtml, formatDateline, getReadMinutes } from "../../lib/blogPost";
+import { getCalendarIssueWeek } from "../../lib/issueWeek";
 import "../../styles/blog-post.css";
 import "../../styles/blog-post-markers.css";
 
@@ -34,12 +35,12 @@ const postPillarLabels = post.pillars.map((pillar) => pillarLabels[pillar] ?? pi
 
 const renderableTree = Markdoc.transform(post.content.node);
 const html = enhancePostHtml(Markdoc.renderers.html(renderableTree));
-const allPosts = await reader.collections.posts.all();
-const sortedPosts = [...allPosts].sort((a, b) =>
-  (a.entry.publishedDate ?? "").localeCompare(b.entry.publishedDate ?? "")
-);
-const entryIndex = sortedPosts.findIndex((item) => item.slug === slug);
-const entryNumber = entryIndex >= 0 ? entryIndex + 1 : 1;
+const publishedDateParts = post.publishedDate?.split("-").map(Number);
+const issueWeek = publishedDateParts
+  ? getCalendarIssueWeek(
+      new Date(publishedDateParts[0], publishedDateParts[1] - 1, publishedDateParts[2])
+    )
+  : null;
 const readMinutes = getReadMinutes(html);
 ---
 
@@ -52,7 +53,9 @@ const readMinutes = getReadMinutes(html);
   <div class="diary-band">
     <div class="wrap diary-meta">
       <span>The SheisFEM Diary</span>
-      <span class="script">entry no. {String(entryNumber).padStart(2, "0")}</span>
+      {issueWeek && (
+        <span class="folio-issue-no">issue no. {String(issueWeek.week).padStart(2, "0")}</span>
+      )}
       <span>Field Notes</span>
     </div>
   </div>

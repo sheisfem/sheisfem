@@ -42,9 +42,11 @@
   text-transform: uppercase;
 }
 
-.diary-meta .script {
+.diary-meta .folio-issue-no {
   color: var(--orange);
-  font-size: 1.15rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
+  font-style: italic;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1;
@@ -344,11 +346,11 @@
     white-space: nowrap;
   }
 
-  .diary-meta .script {
-    font-size: 0.95rem;
+  .diary-meta .folio-issue-no {
+    font-size: 0.88rem;
   }
 
-  .diary-meta span:last-child {
+  .diary-meta > span:last-child {
     display: none;
   }
 

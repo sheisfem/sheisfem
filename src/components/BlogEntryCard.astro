@@ -1,5 +1,6 @@
 ---
-import { formatBlogDate, formatEntryDate, type Pillar, pillarLabels } from "../lib/blogIndex";
+import { formatEntryDate, type Pillar, pillarLabels } from "../lib/blogIndex";
+import { getCalendarIssueWeek } from "../lib/issueWeek";
 import PillarIcon from "./PillarIcon.astro";
 
 interface Props {
@@ -10,12 +11,17 @@ interface Props {
     publishedDate: string | null;
     excerpt?: string;
   };
-  entryNumber: number;
   isLatest?: boolean;
 }
 
-const { slug, entry, entryNumber, isLatest = false } = Astro.props;
+const { slug, entry, isLatest = false } = Astro.props;
 const date = formatEntryDate(entry.publishedDate);
+const publishedDateParts = entry.publishedDate?.split("-").map(Number);
+const issueWeek = publishedDateParts
+  ? getCalendarIssueWeek(
+      new Date(publishedDateParts[0], publishedDateParts[1] - 1, publishedDateParts[2])
+    )
+  : null;
 const entryPillars = entry.pillars;
 const pillarLabelList = entryPillars.map((pillar) => pillarLabels[pillar] ?? pillar);
 ---
@@ -34,7 +40,11 @@ const pillarLabelList = entryPillars.map((pillar) => pillarLabels[pillar] ?? pil
   <div class="date-rail">
     <div class="d-script">{date.monthDay}</div>
     <div class="d-year">{date.year}</div>
-    <div class="d-no">entry no. {String(entryNumber).padStart(2, "0")}</div>
+    <div class="d-issue">
+      {issueWeek && (
+        <div class="d-issue-no">issue no. {String(issueWeek.week).padStart(2, "0")}</div>
+      )}
+    </div>
   </div>
   <div class="entry-main">
     <div class="e-filed-list" aria-label={`Filed under ${pillarLabelList.join(", ")}`}>
@@ -48,10 +58,8 @@ const pillarLabelList = entryPillars.map((pillar) => pillarLabels[pillar] ?? pil
     <h2 data-title-target>{entry.title}</h2>
     {entry.excerpt && <p class="e-excerpt" data-excerpt-target>{entry.excerpt}</p>}
     <div class="e-foot">
-      {entry.publishedDate && <time datetime={entry.publishedDate}>{formatBlogDate(entry.publishedDate)}</time>}
-      <span class="read">Field note</span>
       <span class="open">
-        Open entry
+        Read
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M5 12h14M13 6l6 6-6 6"></path>
         </svg>

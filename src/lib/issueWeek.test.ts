@@ -1,34 +1,34 @@
 import { describe, expect, it } from "vitest";
-import { formatIsoIssueWeek, getCurrentYear, getIsoIssueWeek } from "./issueWeek";
+import { formatCalendarIssueWeek, getCalendarIssueWeek, getCurrentYear } from "./issueWeek";
 
 describe("Given issue week helpers", () => {
-  describe("When calculating ISO week numbers", () => {
-    it("Then calculates ISO weeks inside a normal calendar year", () => {
-      expect(getIsoIssueWeek(new Date("2026-06-08T12:00:00Z"))).toEqual({
-        week: 24,
+  describe("When calculating calendar-year week numbers", () => {
+    it("Then treats each seven-day period from January 1 as a week", () => {
+      expect(getCalendarIssueWeek(new Date("2026-06-08T12:00:00Z"))).toEqual({
+        week: 23,
         year: 2026,
       });
     });
 
-    it("Then assigns early January dates to the previous ISO week-year when appropriate", () => {
-      expect(getIsoIssueWeek(new Date("2021-01-01T12:00:00Z"))).toEqual({
-        week: 53,
-        year: 2020,
+    it("Then always assigns January 1 to week one of the new year", () => {
+      expect(getCalendarIssueWeek(new Date("2021-01-01T12:00:00Z"))).toEqual({
+        week: 1,
+        year: 2021,
       });
     });
 
-    it("Then assigns late December dates to the next ISO week-year when appropriate", () => {
-      expect(getIsoIssueWeek(new Date("2018-12-31T12:00:00Z"))).toEqual({
-        week: 1,
-        year: 2019,
+    it("Then keeps late December dates in the current calendar year", () => {
+      expect(getCalendarIssueWeek(new Date("2018-12-31T12:00:00Z"))).toEqual({
+        week: 53,
+        year: 2018,
       });
     });
   });
 
   describe("When formatting issue labels", () => {
     it("Then formats with a two-digit week number", () => {
-      expect(formatIsoIssueWeek({ week: 4, year: 2026 })).toBe("Issue No.04 · 2026");
-      expect(formatIsoIssueWeek({ week: 14, year: 2026 })).toBe("Issue No.14 · 2026");
+      expect(formatCalendarIssueWeek({ week: 4, year: 2026 })).toBe("Issue No.04 · 2026");
+      expect(formatCalendarIssueWeek({ week: 14, year: 2026 })).toBe("Issue No.14 · 2026");
     });
   });
 

@@ -15,12 +15,6 @@ const allPosts = await reader.collections.posts.all();
 const sorted = [...allPosts].sort((a, b) =>
   (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? "")
 );
-
-const entryNumbers = new Map(
-  [...allPosts]
-    .sort((a, b) => (a.entry.publishedDate ?? "").localeCompare(b.entry.publishedDate ?? ""))
-    .map((post, i) => [post.slug, i + 1])
-);
 ---
 
 <BaseLayout
@@ -44,12 +38,7 @@ const entryNumbers = new Map(
         <>
           <section class="entries" id="entryList" aria-live="polite">
             {sorted.map(({ slug, entry }, i) => (
-              <BlogEntryCard
-                slug={slug}
-                entry={entry}
-                entryNumber={entryNumbers.get(slug) ?? i + 1}
-                isLatest={i === 0}
-              />
+              <BlogEntryCard slug={slug} entry={entry} isLatest={i === 0} />
             ))}
           </section>
 

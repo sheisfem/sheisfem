@@ -496,12 +496,19 @@
   text-transform: uppercase;
 }
 
-.entry .d-no {
+.entry .d-issue {
   margin-top: 22px;
-  color: var(--line-strong);
+  display: grid;
+}
+
+.entry .d-issue-no {
+  justify-self: start;
+  color: var(--ink-soft);
   font-family: "Cormorant Garamond", serif;
   font-size: 1rem;
   font-style: italic;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .entry .e-filed-list {
@@ -558,15 +565,11 @@
   text-transform: uppercase;
 }
 
-.entry .e-foot .read {
-  color: var(--ink-soft);
-}
-
 .entry .e-foot .open {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin-left: auto;
+  margin-left: 0;
   color: var(--orange);
 }
 
@@ -831,7 +834,8 @@
     margin-top: 0;
   }
 
-  .entry .d-no {
+  .entry .d-issue {
+    display: flex;
     justify-self: end;
     margin-top: 0;
   }
@@ -843,11 +847,6 @@
   .entry .e-foot {
     align-items: flex-start;
     gap: 10px 14px;
-  }
-
-  .entry .e-foot .open {
-    width: 100%;
-    margin-left: 0;
   }
 
   .find-empty {
