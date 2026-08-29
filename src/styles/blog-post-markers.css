@@ -111,7 +111,7 @@
   place-items: center;
   background: var(--ink);
   color: var(--cream);
-  content: counter(fn);
+  content: counter(fn, decimal-leading-zero);
   counter-increment: fn;
   font-family: "Cormorant Garamond", serif;
   font-size: 1.1rem;
