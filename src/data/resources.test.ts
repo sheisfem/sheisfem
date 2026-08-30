@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   getFeaturedResources,
+  getPublishedResources,
   getResourceCta,
   getResourceIcon,
   getSectionResources,
@@ -15,7 +16,12 @@ import {
 const resource = (
   id: string,
   type: ResourceType,
-  options: { featured?: boolean; name?: string; pillars?: PillarKey[] } = {}
+  options: {
+    featured?: boolean;
+    name?: string;
+    pillars?: PillarKey[];
+    publishedWithPost?: string;
+  } = {}
 ) =>
   ({
     id,
@@ -24,6 +30,7 @@ const resource = (
       type,
       pillars: options.pillars ?? ["builds"],
       featured: options.featured ?? false,
+      publishedWithPost: options.publishedWithPost,
     },
   }) as ResourceEntry;
 
@@ -129,6 +136,34 @@ describe("Given resource helpers", () => {
         "Morning Brew Daily",
         "The Economist",
       ]);
+    });
+  });
+
+  describe("When getting published resources", () => {
+    const posts = [
+      { slug: "published-post", entry: { publishedDate: "2026-09-14" } },
+      { slug: "future-post", entry: { publishedDate: "2026-09-28" } },
+    ];
+    const publicationDay = new Date("2026-09-14T12:00:00Z");
+
+    it("Then keeps legacy resources and resources whose linked post is published", () => {
+      const resources = [
+        resource("legacy-book", "book"),
+        resource("published-book", "book", { publishedWithPost: "published-post" }),
+      ];
+
+      expect(
+        getPublishedResources(resources, posts, publicationDay).map((item) => item.id)
+      ).toEqual(["legacy-book", "published-book"]);
+    });
+
+    it("Then hides resources linked to future or missing posts", () => {
+      const resources = [
+        resource("future-book", "book", { publishedWithPost: "future-post" }),
+        resource("broken-link-book", "book", { publishedWithPost: "missing-post" }),
+      ];
+
+      expect(getPublishedResources(resources, posts, publicationDay)).toEqual([]);
     });
   });
 });

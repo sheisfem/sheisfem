@@ -131,9 +131,16 @@ Resources live in `src/content/resources/` as `.yaml` files. Each resource inclu
 - `url`
 - `description`
 - `featured`
+- `publishedWithPost` — optional link to the blog post that controls when the resource appears
 
 The directory groups resources into Explore (tools), Read (books and publications), and Listen
-(podcasts). Featured resources appear on the homepage shortlist.
+(podcasts). Featured resources appear on the homepage shortlist. A resource linked through
+`publishedWithPost` remains hidden from the directory, its resource counts, and the homepage until
+the selected post is published. Resources without a linked post remain visible immediately.
+
+For a scheduled post recommendation, create the resource in Keystatic, select the post under
+**Publish with Blog Post**, and merge the resource PR ahead of publication. The Monday scheduled
+build will publish the post and its linked resource together.
 
 ### Homepage Singleton
 

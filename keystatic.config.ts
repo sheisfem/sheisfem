@@ -58,6 +58,12 @@ export default config({
         }),
         url: fields.url({ label: "URL" }),
         description: fields.text({ label: "Description", multiline: true }),
+        publishedWithPost: fields.relationship({
+          label: "Publish with Blog Post",
+          description:
+            "Keep this resource hidden until the selected blog post is published. Leave blank to publish immediately.",
+          collection: "posts",
+        }),
         featured: fields.checkbox({ label: "Feature on homepage", defaultValue: false }),
       },
     }),
