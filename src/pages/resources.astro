@@ -1,9 +1,12 @@
 ---
 import { getCollection } from "astro:content";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
 import Disclosure from "../components/Disclosure.astro";
 import FolioBar from "../components/FolioBar.astro";
 import ResourceRow from "../components/ResourceRow.astro";
 import {
+  getPublishedResources,
   getResourceCta,
   getResourceIcon,
   getSectionResources,
@@ -12,7 +15,12 @@ import {
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/resources.css";
 
-const resources = await getCollection("resources");
+declare const process: { cwd(): string };
+
+const allResources = await getCollection("resources");
+const reader = createReader(process.cwd(), keystaticConfig);
+const allPosts = await reader.collections.posts.all();
+const resources = getPublishedResources(allResources, allPosts);
 const countLabel = (count: number) => `${count} ${count === 1 ? "resource" : "resources"}`;
 ---
 

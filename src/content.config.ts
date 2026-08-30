@@ -21,6 +21,7 @@ const resources = defineCollection({
     url: z.url(),
     description: z.string(),
     featured: z.boolean().default(false),
+    publishedWithPost: z.string().nullable().optional(),
   }),
 });
 

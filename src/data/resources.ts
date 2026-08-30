@@ -1,4 +1,5 @@
 import type { CollectionEntry } from "astro:content";
+import { isBlogPostPublished } from "../lib/blogPublishing";
 
 export const pillars = [
   {
@@ -47,6 +48,13 @@ export type PillarKey = (typeof pillars)[number]["key"];
 export type ResourceEntry = CollectionEntry<"resources">;
 export type ResourceType = ResourceEntry["data"]["type"];
 export type ResourceSectionKey = "explore" | "read" | "listen";
+
+type ResourcePublicationPost = {
+  slug: string;
+  entry: {
+    publishedDate: string | null;
+  };
+};
 
 export const resourceSections = [
   {
@@ -119,3 +127,16 @@ export const getFeaturedResources = (resources: ResourceEntry[]) =>
   resources
     .filter((resource) => resource.data.featured)
     .sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+export const getPublishedResources = (
+  resources: ResourceEntry[],
+  posts: ResourcePublicationPost[],
+  now = new Date()
+) => {
+  const postDates = new Map(posts.map(({ slug, entry }) => [slug, entry.publishedDate]));
+
+  return resources.filter((resource) => {
+    const postSlug = resource.data.publishedWithPost;
+    return !postSlug || isBlogPostPublished(postDates.get(postSlug) ?? null, now);
+  });
+};
