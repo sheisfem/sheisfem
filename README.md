@@ -62,6 +62,21 @@ Posts live in `src/content/posts/` as `.mdoc` files. Each post includes:
 - `excerpt` — renders above the post body as a styled lede with a handwritten orange "the gist" label (via `.post-lede`)
 - Markdoc body content
 
+`publishedDate` controls both the displayed date and publication. Future-dated posts can be merged
+into the default branch, but they are excluded from the homepage, blog index, individual post
+routes, and sitemap until that date begins in `America/Toronto`.
+
+The `Publish scheduled blog posts` GitHub Actions workflow checks for due posts every Monday at
+12:05 a.m. Toronto time. It skips deployment when no post is due. A manual workflow run always
+triggers a deployment and can be used as a recovery path.
+
+To enable scheduled publication:
+
+1. In Vercel, open the project’s **Settings → Git → Deploy Hooks** and create a hook for the
+   production branch.
+2. In GitHub, open **Settings → Secrets and variables → Actions** and add the hook URL as the
+   repository secret `VERCEL_DEPLOY_HOOK_URL`.
+
 The blog post template automatically applies the diary styling to every post. Normal Markdown works as expected. Use the optional authoring markers below when a post needs extra editorial texture.
 
 ### Blog Styling Markers

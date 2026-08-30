@@ -6,6 +6,7 @@ import CommentsSection from "../../components/CommentsSection";
 import PillarIcon from "../../components/PillarIcon.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { enhancePostHtml, formatDateline, getReadMinutes } from "../../lib/blogPost";
+import { isBlogPostPublished } from "../../lib/blogPublishing";
 import { getCalendarIssueWeek } from "../../lib/issueWeek";
 import "../../styles/blog-post.css";
 import "../../styles/blog-post-markers.css";
@@ -14,8 +15,10 @@ declare const process: { cwd(): string };
 
 export async function getStaticPaths() {
   const reader = createReader(process.cwd(), keystaticConfig);
-  const slugs = await reader.collections.posts.list();
-  return slugs.map((slug) => ({ params: { slug } }));
+  const posts = await reader.collections.posts.all();
+  return posts
+    .filter(({ entry }) => isBlogPostPublished(entry.publishedDate))
+    .map(({ slug }) => ({ params: { slug } }));
 }
 
 const { slug } = Astro.params;

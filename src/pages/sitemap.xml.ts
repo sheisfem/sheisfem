@@ -1,5 +1,6 @@
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../keystatic.config";
+import { isBlogPostPublished } from "../lib/blogPublishing";
 
 declare const process: { cwd(): string };
 
@@ -31,11 +32,13 @@ export async function GET() {
       loc: pageUrl(path),
       priority: path === "" ? "1.0" : path === "blog" ? "0.9" : "0.8",
     })),
-    ...posts.map(({ slug, entry }) => ({
-      loc: pageUrl(`blog/${slug}`),
-      lastmod: entry.publishedDate,
-      priority: "0.7",
-    })),
+    ...posts
+      .filter(({ entry }) => isBlogPostPublished(entry.publishedDate))
+      .map(({ slug, entry }) => ({
+        loc: pageUrl(`blog/${slug}`),
+        lastmod: entry.publishedDate,
+        priority: "0.7",
+      })),
   ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

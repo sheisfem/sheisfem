@@ -7,6 +7,7 @@ import PillarIcon from "../components/PillarIcon.astro";
 import ResourceRow from "../components/ResourceRow.astro";
 import { getFeaturedResources, getResourceIcon } from "../data/resources";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { isBlogPostPublished } from "../lib/blogPublishing";
 import { formatCalendarIssueWeek } from "../lib/issueWeek";
 import "../styles/home.css";
 import "../styles/home-newsletter.css";
@@ -18,6 +19,7 @@ const featuredResources = getFeaturedResources(resources);
 const reader = createReader(process.cwd(), keystaticConfig);
 const allPosts = await reader.collections.posts.all();
 const recentPosts = [...allPosts]
+  .filter(({ entry }) => isBlogPostPublished(entry.publishedDate))
   .sort((a, b) => (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? ""))
   .slice(0, 2);
 const currentIssueWeekLabel = formatCalendarIssueWeek();
