@@ -6,15 +6,16 @@ import BlogFindControls from "../../components/BlogFindControls.astro";
 import BlogFindSummary from "../../components/BlogFindSummary.astro";
 import BlogIndexHero from "../../components/BlogIndexHero.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { isBlogPostPublished } from "../../lib/blogPublishing";
 import "../../styles/blog-index.css";
 
 declare const process: { cwd(): string };
 const reader = createReader(process.cwd(), keystaticConfig);
 const allPosts = await reader.collections.posts.all();
 
-const sorted = [...allPosts].sort((a, b) =>
-  (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? "")
-);
+const sorted = [...allPosts]
+  .filter(({ entry }) => isBlogPostPublished(entry.publishedDate))
+  .sort((a, b) => (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? ""));
 ---
 
 <BaseLayout

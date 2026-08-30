@@ -1,0 +1,45 @@
+name: Publish scheduled blog posts
+
+on:
+  schedule:
+    - cron: "5 0 * * 1"
+      timezone: "America/Toronto"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the latest content
+        uses: actions/checkout@v4
+
+      - name: Check for a post due today
+        id: scheduled-post
+        shell: bash
+        run: |
+          publication_date="$(TZ=America/Toronto date +%F)"
+          echo "date=${publication_date}" >> "$GITHUB_OUTPUT"
+
+          if grep -RqsE "^publishedDate:[[:space:]]*['\"]?${publication_date}['\"]?[[:space:]]*$" src/content/posts; then
+            echo "due=true" >> "$GITHUB_OUTPUT"
+            echo "A blog post is scheduled for ${publication_date}."
+          else
+            echo "due=false" >> "$GITHUB_OUTPUT"
+            echo "No blog post is scheduled for ${publication_date}."
+          fi
+
+      - name: Trigger the Vercel production build
+        if: steps.scheduled-post.outputs.due == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        shell: bash
+        run: |
+          if [[ -z "$VERCEL_DEPLOY_HOOK_URL" ]]; then
+            echo "::error::The VERCEL_DEPLOY_HOOK_URL repository secret is not configured."
+            exit 1
+          fi
+
+          curl --fail-with-body --silent --show-error --request POST "$VERCEL_DEPLOY_HOOK_URL"
