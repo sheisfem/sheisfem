@@ -38,7 +38,9 @@ const pillarLabelList = entryPillars.map((pillar) => pillarLabels[pillar] ?? pil
   data-search={`${entry.title} ${entry.excerpt ?? ""} ${pillarLabelList.join(" ")}`.toLowerCase()}
 >
   {(isLatest || isScheduled) && (
-    <span class="pin" data-pin>{isScheduled ? "Scheduled" : "Latest"}</span>
+    <span class="pin" data-pin={isScheduled ? "scheduled" : "latest"}>
+      {isScheduled ? "Scheduled" : "Latest"}
+    </span>
   )}
   <div class="date-rail">
     <div class="d-script">{date.monthDay}</div>
