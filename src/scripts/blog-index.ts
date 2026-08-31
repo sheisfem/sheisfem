@@ -126,9 +126,9 @@ if (list) {
 
     list.replaceChildren(...visible);
     entries.forEach((entry) => {
-      const pin = entry.querySelector<HTMLElement>("[data-pin]");
-      if (pin) {
-        pin.hidden = !(visible[0] === entry && !isFiltered && state.sort === "new");
+      const latestPin = entry.querySelector<HTMLElement>('[data-pin="latest"]');
+      if (latestPin) {
+        latestPin.hidden = !(visible[0] === entry && !isFiltered && state.sort === "new");
       }
       paintEntryText(entry);
     });
