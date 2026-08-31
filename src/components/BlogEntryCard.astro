@@ -12,9 +12,10 @@ interface Props {
     excerpt?: string;
   };
   isLatest?: boolean;
+  isScheduled?: boolean;
 }
 
-const { slug, entry, isLatest = false } = Astro.props;
+const { slug, entry, isLatest = false, isScheduled = false } = Astro.props;
 const date = formatEntryDate(entry.publishedDate);
 const publishedDateParts = entry.publishedDate?.split("-").map(Number);
 const issueWeek = publishedDateParts
@@ -36,7 +37,9 @@ const pillarLabelList = entryPillars.map((pillar) => pillarLabels[pillar] ?? pil
   data-excerpt={entry.excerpt ?? ""}
   data-search={`${entry.title} ${entry.excerpt ?? ""} ${pillarLabelList.join(" ")}`.toLowerCase()}
 >
-  {isLatest && <span class="pin" data-pin>Latest</span>}
+  {(isLatest || isScheduled) && (
+    <span class="pin" data-pin>{isScheduled ? "Scheduled" : "Latest"}</span>
+  )}
   <div class="date-rail">
     <div class="d-script">{date.monthDay}</div>
     <div class="d-year">{date.year}</div>

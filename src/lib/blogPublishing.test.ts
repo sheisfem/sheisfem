@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getBlogPublishingDate, isBlogPostPublished } from "./blogPublishing";
+import { getBlogPublishingDate, isBlogPostPublished, isBlogPostVisible } from "./blogPublishing";
 
 describe("Given the blog publishing schedule", () => {
   describe("When resolving the current publishing date", () => {
@@ -33,6 +33,23 @@ describe("Given the blog publishing schedule", () => {
     it("Then excludes future-dated and undated posts", () => {
       expect(isBlogPostPublished("2026-09-28", mondayMorning)).toBe(false);
       expect(isBlogPostPublished(null, mondayMorning)).toBe(false);
+    });
+  });
+
+  describe("When building an authenticated preview", () => {
+    const mondayMorning = new Date("2026-09-14T12:00:00Z");
+
+    it("Then includes future-dated posts when scheduled posts are enabled", () => {
+      expect(isBlogPostVisible("2026-09-28", true, mondayMorning)).toBe(true);
+    });
+
+    it("Then continues to exclude undated posts", () => {
+      expect(isBlogPostVisible(null, true, mondayMorning)).toBe(false);
+    });
+
+    it("Then preserves the production publishing rule when preview is disabled", () => {
+      expect(isBlogPostVisible("2026-09-28", false, mondayMorning)).toBe(false);
+      expect(isBlogPostVisible("2026-09-14", false, mondayMorning)).toBe(true);
     });
   });
 });

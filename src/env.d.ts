@@ -6,4 +6,5 @@ interface ImportMetaEnv {
   readonly KIT_API_KEY?: string;
   readonly KIT_FORM_ID?: string;
   readonly KIT_TAG_ID?: string;
+  readonly SHOW_SCHEDULED_POSTS?: string;
 }

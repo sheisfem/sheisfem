@@ -240,3 +240,18 @@ a {
     padding-bottom: 72px;
   }
 }
+/* Authenticated editorial preview */
+.site-preview-banner {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0.55rem 1rem;
+  background: #2d2a26;
+  color: #fffaf0;
+  font-family: "Jost", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}

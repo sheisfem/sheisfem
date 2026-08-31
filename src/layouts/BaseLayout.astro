@@ -21,6 +21,7 @@ const {
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 const imageUrl = new URL(image, Astro.site ?? Astro.url).href;
+const isScheduledPreview = import.meta.env.SHOW_SCHEDULED_POSTS === "true";
 ---
 
 <!doctype html>
@@ -29,7 +30,7 @@ const imageUrl = new URL(image, Astro.site ?? Astro.url).href;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={isScheduledPreview ? "noindex, nofollow" : "index, follow"} />
     <meta name="generator" content={Astro.generator} />
     <meta name="p:domain_verify" content="34dcd05c9209fdc7d3074ae2351b0b1a" />
     <link rel="canonical" href={canonicalUrl} />
@@ -54,6 +55,11 @@ const imageUrl = new URL(image, Astro.site ?? Astro.url).href;
     <title>{title}</title>
   </head>
   <body>
+    {isScheduledPreview && (
+      <div class="site-preview-banner" role="status">
+        Preview mode · Scheduled posts are visible
+      </div>
+    )}
     <Masthead active={active} />
     <slot />
     <Footer />

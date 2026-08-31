@@ -6,16 +6,20 @@ import BlogFindControls from "../../components/BlogFindControls.astro";
 import BlogFindSummary from "../../components/BlogFindSummary.astro";
 import BlogIndexHero from "../../components/BlogIndexHero.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { isBlogPostPublished } from "../../lib/blogPublishing";
+import { isBlogPostPublished, isBlogPostVisible } from "../../lib/blogPublishing";
 import "../../styles/blog-index.css";
 
 declare const process: { cwd(): string };
 const reader = createReader(process.cwd(), keystaticConfig);
 const allPosts = await reader.collections.posts.all();
+const includeScheduled = import.meta.env.SHOW_SCHEDULED_POSTS === "true";
 
 const sorted = [...allPosts]
-  .filter(({ entry }) => isBlogPostPublished(entry.publishedDate))
+  .filter(({ entry }) => isBlogPostVisible(entry.publishedDate, includeScheduled))
   .sort((a, b) => (b.entry.publishedDate ?? "").localeCompare(a.entry.publishedDate ?? ""));
+const latestPublishedSlug = sorted.find(({ entry }) =>
+  isBlogPostPublished(entry.publishedDate)
+)?.slug;
 ---
 
 <BaseLayout
@@ -38,8 +42,13 @@ const sorted = [...allPosts]
       ) : (
         <>
           <section class="entries" id="entryList" aria-live="polite">
-            {sorted.map(({ slug, entry }, i) => (
-              <BlogEntryCard slug={slug} entry={entry} isLatest={i === 0} />
+            {sorted.map(({ slug, entry }) => (
+              <BlogEntryCard
+                slug={slug}
+                entry={entry}
+                isLatest={slug === latestPublishedSlug}
+                isScheduled={!isBlogPostPublished(entry.publishedDate)}
+              />
             ))}
           </section>
 

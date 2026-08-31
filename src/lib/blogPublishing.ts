@@ -16,3 +16,9 @@ export const getBlogPublishingDate = (now = new Date()) => {
 
 export const isBlogPostPublished = (publishedDate: string | null, now = new Date()) =>
   Boolean(publishedDate && publishedDate <= getBlogPublishingDate(now));
+
+export const isBlogPostVisible = (
+  publishedDate: string | null,
+  includeScheduled = false,
+  now = new Date()
+) => Boolean(publishedDate && (includeScheduled || isBlogPostPublished(publishedDate, now)));

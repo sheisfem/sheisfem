@@ -6,7 +6,7 @@ import CommentsSection from "../../components/CommentsSection";
 import PillarIcon from "../../components/PillarIcon.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { enhancePostHtml, formatDateline, getReadMinutes } from "../../lib/blogPost";
-import { isBlogPostPublished } from "../../lib/blogPublishing";
+import { isBlogPostPublished, isBlogPostVisible } from "../../lib/blogPublishing";
 import { getCalendarIssueWeek } from "../../lib/issueWeek";
 import "../../styles/blog-post.css";
 import "../../styles/blog-post-markers.css";
@@ -16,8 +16,9 @@ declare const process: { cwd(): string };
 export async function getStaticPaths() {
   const reader = createReader(process.cwd(), keystaticConfig);
   const posts = await reader.collections.posts.all();
+  const includeScheduled = import.meta.env.SHOW_SCHEDULED_POSTS === "true";
   return posts
-    .filter(({ entry }) => isBlogPostPublished(entry.publishedDate))
+    .filter(({ entry }) => isBlogPostVisible(entry.publishedDate, includeScheduled))
     .map(({ slug }) => ({ params: { slug } }));
 }
 
@@ -26,6 +27,7 @@ const { slug } = Astro.params;
 const reader = createReader(process.cwd(), keystaticConfig);
 const post = await reader.collections.posts.read(slug, { resolveLinkedFiles: true });
 if (!post) throw new Error(`Post not found: ${slug}`);
+const isScheduled = !isBlogPostPublished(post.publishedDate);
 
 const pillarLabels: Record<string, string> = {
   earns: "She Earns More",
@@ -79,6 +81,7 @@ const readMinutes = getReadMinutes(html);
       </a>
 
       <article class="post-page">
+        {isScheduled && <p class="post-scheduled-notice">Scheduled for {formatDateline(post.publishedDate)}</p>}
         <p class="ph-dateline">{formatDateline(post.publishedDate)}</p>
         <hr class="ph-rule" />
         <h1>{post.title}</h1>

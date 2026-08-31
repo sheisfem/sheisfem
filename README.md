@@ -77,6 +77,14 @@ To enable scheduled publication:
 2. In GitHub, open **Settings → Secrets and variables → Actions** and add the hook URL as the
    repository secret `VERCEL_DEPLOY_HOOK_URL`.
 
+### Protected scheduled-post preview
+
+Preview deployments can include future-dated posts without exposing them on production. In the
+Vercel project, add `SHOW_SCHEDULED_POSTS=true` to the **Preview** environment only, then enable
+**Settings → Deployment Protection → Vercel Authentication** with Standard Protection. Preview
+builds will include scheduled posts, display a preview banner, and emit `noindex, nofollow` metadata.
+Production builds continue to exclude scheduled posts because the variable is not set there.
+
 The blog post template automatically applies the diary styling to every post. Normal Markdown works as expected. Use the optional authoring markers below when a post needs extra editorial texture.
 
 ### Blog Styling Markers
