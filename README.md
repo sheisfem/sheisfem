@@ -106,14 +106,18 @@ Use these markers inside a post body:
 
 <img width="794" height="171" alt="Screenshot 2026-06-08 at 9 09 07 PM" src="https://github.com/user-attachments/assets/1c20b897-cb49-4f49-ba72-b043cd000a98" />
 
-Consecutive numbered bold paragraphs become a paper-style field notes block:
+Consecutive numbered entries become a paper-style field notes block. Put the bold main point on
+one line and its supporting detail on the next:
 
 ```md
-**1. First takeaway.** Supporting detail here.
+**01. First takeaway.**
+Supporting detail here.
 
-**2. Second takeaway.** Supporting detail here.
+**02. Second takeaway.**
+Supporting detail here.
 
-**3. Third takeaway.** Supporting detail here.
+**03. Third takeaway.**
+Supporting detail here.
 ```
 
 
