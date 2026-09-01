@@ -104,7 +104,8 @@ Use these markers inside a post body:
 [[note: This becomes a handwritten margin note.]]
 ```
 
-<img width="794" height="171" alt="Screenshot 2026-06-08 at 9 09 07 PM" src="https://github.com/user-attachments/assets/1c20b897-cb49-4f49-ba72-b043cd000a98" />
+<img width="811" height="239" alt="Screenshot 2026-09-01 at 2 35 08 PM" src="https://github.com/user-attachments/assets/2a91f25c-00ed-415e-9db9-120a89f8a677" />
+
 
 Consecutive numbered entries become a paper-style field notes block. Put the bold main point on
 one line and its supporting detail on the next:
